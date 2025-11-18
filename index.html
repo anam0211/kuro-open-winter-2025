@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kuro Open Winter 2025 - Giải cầu lông mở rộng</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Font -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #4fd1ff;
+      --primary-soft: rgba(79, 209, 255, 0.25);
+      --accent: #ff9cf5;
+      --bg-dark: rgba(4, 10, 30, 0.92);
+      --card-bg: rgba(7, 16, 40, 0.82);
+      --border-soft: rgba(255, 255, 255, 0.18);
+      --text-main: #f8fafc;
+      --text-soft: #cbd5f5;
+      --blur: 22px;
+      --radius-card: 22px;
+      --shadow-strong: 0 25px 60px rgba(0, 0, 0, 0.9);
+      --transition-fast: 0.2s ease-out;
+      --transition-med: 0.35s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-main);
+      background-image: url("https://th.bing.com/th/id/R.45cb163a32239427adef3815f0c30e04?rik=4AS5m9cEXd9Fzw&pid=ImgRaw&r=0");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  /* Giảm độ tối để ảnh nền rõ hơn */
+  background: radial-gradient(circle at top left, rgba(79, 209, 255, 0.12), transparent 55%),
+              radial-gradient(circle at bottom right, rgba(255, 156, 245, 0.18), transparent 55%),
+              linear-gradient(to bottom, rgba(3, 7, 18, 0.55), rgba(15, 23, 42, 0.72));
+  backdrop-filter: blur(4px);  /* trước là 10px → giảm để ảnh rõ hơn */
+  z-index: -1;
+}
+
+
+    /* NAV + HERO */
+
+    header.hero {
+      min-height: 100vh;
+      padding: 24px 7vw 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo span {
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 255, 0.6);
+      background: radial-gradient(circle at top left, rgba(148, 163, 255, 0.35), transparent 55%);
+      font-size: 0.7rem;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 26px;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color var(--transition-fast);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width var(--transition-med);
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .hero-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-text .tag {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-soft);
+      margin-bottom: 12px;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.6rem, 4vw, 3.4rem);
+      line-height: 1.1;
+      margin-bottom: 14px;
+      background: linear-gradient(120deg, #ffffff, #e5f6ff, #a5b4fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      margin-bottom: 22px;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+
+    .badge-chip {
+      font-size: 0.78rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 255, 0.6);
+      padding: 6px 12px;
+      background: radial-gradient(circle at top left, rgba(79, 209, 255, 0.15), transparent 55%);
+      backdrop-filter: blur(12px);
+    }
+
+    .countdown-wrap {
+      margin-bottom: 26px;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .countdown {
+      margin-top: 6px;
+      display: inline-flex;
+      gap: 12px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 255, 0.5);
+      background: radial-gradient(circle at top left, rgba(79, 209, 255, 0.22), transparent 55%);
+      box-shadow: 0 0 20px rgba(79, 209, 255, 0.25);
+      font-size: 0.86rem;
+    }
+
+    .count-segment {
+      text-align: center;
+      min-width: 55px;
+    }
+
+    .count-number {
+      font-weight: 600;
+      font-size: 1rem;
+      display: block;
+    }
+
+    .count-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 10px 20px;
+      border: 1px solid transparent;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn.primary {
+      background: linear-gradient(120deg, var(--primary), #a5b4fc);
+      color: #020617;
+      box-shadow: 0 14px 30px rgba(56, 189, 248, 0.55);
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 18px 40px rgba(56, 189, 248, 0.7);
+    }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--text-main);
+      border-color: rgba(148, 163, 255, 0.6);
+      backdrop-filter: blur(14px);
+    }
+
+    .btn.ghost:hover {
+      background: rgba(15, 23, 42, 0.9);
+      transform: translateY(-1px);
+      border-color: rgba(191, 219, 254, 0.8);
+    }
+
+    .hero-visual {
+      position: relative;
+      padding: 20px;
+    }
+
+    .hero-card {
+      border-radius: 26px;
+      padding: 20px;
+      background: radial-gradient(circle at top left, rgba(79, 209, 255, 0.32), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(255, 156, 245, 0.3), transparent 55%),
+                  var(--card-bg);
+      border: 1px solid var(--border-soft);
+      backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow-strong);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: conic-gradient(from 180deg, rgba(56, 189, 248, 0.18), transparent, rgba(244, 114, 182, 0.15), transparent);
+      opacity: 0.6;
+      mix-blend-mode: screen;
+      animation: rotateGlow 12s linear infinite;
+    }
+
+    .hero-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-card-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+      color: var(--text-soft);
+    }
+
+    .hero-card-big {
+      font-size: 1.6rem;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .hero-card-detail {
+      font-size: 0.82rem;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .hero-mini-table {
+      margin-top: 12px;
+      border-radius: 16px;
+      padding: 10px 12px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 255, 0.5);
+      font-size: 0.78rem;
+    }
+
+    .hero-mini-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px dashed rgba(148, 163, 255, 0.25);
+    }
+
+    .hero-mini-row:last-child {
+      border-bottom: none;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(34, 197, 94, 0.7);
+      background: rgba(22, 163, 74, 0.18);
+      margin-top: 10px;
+    }
+
+    .glow-orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(18px);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .orb-1 {
+      width: 120px;
+      height: 120px;
+      background: rgba(59, 130, 246, 0.7);
+      top: -10px;
+      right: -30px;
+      animation: floatOrb 8s ease-in-out infinite alternate;
+    }
+
+    .orb-2 {
+      width: 90px;
+      height: 90px;
+      background: rgba(248, 250, 252, 0.9);
+      bottom: -20px;
+      left: -20px;
+      animation: floatOrb 10s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes rotateGlow {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes floatOrb {
+      to {
+        transform: translate3d(20px, -20px, 0) scale(1.1);
+        opacity: 0.85;
+      }
+    }
+
+    /* SECTIONS */
+
+    main {
+      padding: 0 7vw 60px;
+    }
+
+    section.section {
+      margin-top: 32px;
+      padding: 40px 0 10px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 18px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .section-header h2 {
+      font-size: 1.6rem;
+    }
+
+    .section-header p {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      max-width: 520px;
+    }
+
+    .section-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-strong);
+      backdrop-filter: blur(var(--blur));
+      padding: 22px 22px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      opacity: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at top left, rgba(79, 209, 255, 0.3), transparent 60%);
+      transition: opacity var(--transition-med);
+    }
+
+    .glass-card:hover::before {
+      opacity: 1;
+    }
+
+    /* TABLES */
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    thead {
+      background: linear-gradient(90deg, rgba(56, 189, 248, 0.45), rgba(129, 140, 248, 0.55));
+    }
+
+    th, td {
+      padding: 9px 10px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th {
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(148, 163, 255, 0.18);
+      background: linear-gradient(90deg, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85));
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    tbody tr:nth-child(odd) {
+      background: linear-gradient(90deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.78));
+    }
+
+    tbody tr:hover {
+      background: linear-gradient(90deg, rgba(56, 189, 248, 0.16), rgba(15, 23, 42, 0.96));
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.9);
+    }
+
+    .col-round {
+      font-weight: 600;
+      color: #e0f2fe;
+    }
+
+    .label-rest {
+      font-size: 0.78rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(248, 250, 252, 0.05);
+      border: 1px dashed rgba(148, 163, 255, 0.5);
+    }
+
+    /* PLAYERS */
+
+    .players-section {
+  padding: 60px 7vw;
+  text-align: center;
+}
+
+.player-card {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin: 30px auto;
+  padding: 25px;
+  max-width: 800px;
+  background: rgba(7, 16, 40, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+  transition: transform 0.3s ease, box-shadow 0.4s ease;
+}
+
+.player-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+}
+
+.player-photo {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(79, 209, 255, 0.5);
+}
+
+.player-info h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.player-info span {
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-weight: 400;
+}
+
+.player-info p {
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .player-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+
+    /* SCORING */
+
+    .score-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .score-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      header.hero {
+        padding-top: 16px;
+      }
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .nav-links {
+        gap: 18px;
+      }
+    }
+
+    .rules-list {
+      font-size: 0.86rem;
+      color: var(--text-soft);
+      line-height: 1.6;
+      padding-left: 18px;
+    }
+
+    .rules-list li {
+      margin-bottom: 6px;
+    }
+
+    .rules-footnote {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #e5e7eb;
+      opacity: 0.9;
+    }
+
+    .score-note {
+      font-size: 0.78rem;
+      color: rgba(226, 232, 240, 0.9);
+      margin-top: 8px;
+    }
+
+    .score-highlight {
+      color: #bef264;
+      font-weight: 500;
+    }
+
+    .counter {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* FADE-IN EFFECT */
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* FOOTER */
+
+ footer {
+  background: rgba(10, 15, 35, 0.92);
+  padding: 50px 7vw;
+  border-top: 1px solid rgba(148, 163, 255, 0.25);
+  backdrop-filter: blur(18px);
+  color: #e5e7eb;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px;
+}
+
+.footer-info h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #f8fafc;
+}
+
+.footer-contact ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-contact a {
+  color: #cbd5f5;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+.footer-contact a i {
+  margin-right: 8px;
+  color: #70e4ff;
+}
+
+.footer-contact a:hover {
+  color: #ffffff;
+}
+
+.social-icons a {
+  font-size: 1.4rem;
+  margin-right: 15px;
+  color: #cbd5f5;
+  text-decoration: none;
+  transition: transform 0.3s ease, filter 0.3s ease, color 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+  color: #ffffff;
+  filter: drop-shadow(0 0 6px #4fd1ff);
+}
+
+.copyright {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+
+  </style>
+</head>
+
+<body>
+  <header class="hero" id="top">
+    <nav class="nav">
+      <div class="logo">
+        Kuro Open
+        <span>Winter 2025</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#schedule">Lịch thi đấu</a></li>
+        <li><a href="#players">Vận động viên</a></li>
+        <li><a href="#scoring">Cách tính điểm</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-main">
+      <div class="hero-text">
+        <p class="tag">Giải cầu lông mở rộng</p>
+        <h1>Kuro Open Winter 2025</h1>
+        <p class="subtitle">
+          Ngày <strong>01/01/2025</strong> • Nhà thi đấu Kuro Arena • Thể thức vòng tròn 5 người
+        </p>
+
+        <div class="hero-badges">
+          <div class="badge-chip">Đơn nam phong trào</div>
+          <div class="badge-chip">Điểm số chi tiết từng set</div>
+          <div class="badge-chip">Highlight &amp; tổng kết sau giải</div>
+        </div>
+
+        <div class="countdown-wrap">
+          <span>Đếm ngược tới giờ khai mạc:</span>
+          <div id="countdown" class="countdown"></div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#schedule" class="btn primary">
+            Xem lịch thi đấu
+          </a>
+          <a href="#scoring" class="btn ghost">
+            Ví dụ cách tính điểm
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-inner">
+            <div class="hero-card-title">Bảng đấu Kuro</div>
+            <div class="hero-card-big">5 tay vợt – 10 trận – 1 nhà vô địch</div>
+
+            <div class="hero-card-detail">
+              <span><strong>Thời gian:</strong> 01/01/2025</span>
+              <span><strong>Thể thức:</strong> Vòng tròn 1 lượt</span>
+            </div>
+
+            <div class="hero-mini-table">
+              <div class="hero-mini-row">
+                <span>Vòng 1</span>
+                <span>AnKuro vs KiênKuro</span>
+              </div>
+              <div class="hero-mini-row">
+                <span>Vòng 3</span>
+                <span>QuangKuro vs AnKuro</span>
+              </div>
+              <div class="hero-mini-row">
+                <span>Vòng 5</span>
+                <span>ĐứcKuro vs KiênKuro</span>
+              </div>
+              <div class="hero-mini-row">
+                <span>Nghỉ luân phiên</span>
+                <span>Ai cũng có 1 vòng nghỉ</span>
+              </div>
+            </div>
+
+            <div class="pill">
+              🔥 Trực tiếp đếm set &amp; điểm • Ưu tiên hiệu số nếu bằng trận thắng
+            </div>
+          </div>
+          <span class="glow-orb orb-1"></span>
+          <span class="glow-orb orb-2"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- LỊCH THI ĐẤU -->
+    <section id="schedule" class="section fade-in">
+      <div class="section-header">
+        <div>
+          <div class="section-tag">Lịch thi đấu</div>
+          <h2>Bảng vòng tròn Kuro Open</h2>
+        </div>
+        <p>
+          Mỗi tay vợt sẽ gặp tất cả những người còn lại một lần. Bảng dưới đây mô phỏng đủ
+          <strong>5 vòng</strong> với <strong>10 trận đấu</strong>, kèm người được nghỉ mỗi vòng.
+        </p>
+      </div>
+
+      <div class="glass-card">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Vòng</th>
+              <th>Trận 1</th>
+              <th>Trận 2</th>
+              <th>Nghỉ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-round">Vòng 1</td>
+              <td>QuangKuro vs ĐứcKuro</td>
+              <td>KiênKuro vs AnKuro</td>
+              <td><span class="label-rest">HoánKuro</span></td>
+            </tr>
+            <tr>
+              <td class="col-round">Vòng 2</td>
+              <td>QuangKuro vs KiênKuro</td>
+              <td>HoánKuro vs ĐứcKuro</td>
+              <td><span class="label-rest">AnKuro</span></td>
+            </tr>
+            <tr>
+              <td class="col-round">Vòng 3</td>
+              <td>QuangKuro vs AnKuro</td>
+              <td>KiênKuro vs HoánKuro</td>
+              <td><span class="label-rest">ĐứcKuro</span></td>
+            </tr>
+            <tr>
+              <td class="col-round">Vòng 4</td>
+              <td>QuangKuro vs HoánKuro</td>
+              <td>ĐứcKuro vs AnKuro</td>
+              <td><span class="label-rest">KiênKuro</span></td>
+            </tr>
+            <tr>
+              <td class="col-round">Vòng 5</td>
+              <td>ĐứcKuro vs KiênKuro</td>
+              <td>AnKuro vs HoánKuro</td>
+              <td><span class="label-rest">QuangKuro</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PLAYERS -->
+    <section id="players" class="players-section">
+  <h2>5 chiến binh nhà Kuro</h2>
+  <p class="section-subtitle">Mỗi người một phong cách – Ai sẽ là nhà vô địch Kuro Open Winter?</p>
+
+  <div class="player-card">
+    <img src="./img/z7238788029070_fbe3bf347e7e5570e3deb86f3b43c6df.jpg" class="player-photo">
+    <div class="player-info">
+      <h3>AnKuro <span>• Toàn diện – kiểm soát trận đấu</span></h3>
+      <p>Sở hữu bước chân linh hoạt, chuyên bắt bài và phản công bất ngờ ở cuối set.</p>
+    </div>
+  </div>
+
+  <div class="player-card">
+    <img src="./img/z7238788029590_18135496fc86f324c7b9b2d03f87463f.jpg" class="player-photo">
+    <div class="player-info">
+      <h3>ĐứcKuro <span>• Tấn công mạnh – Smash uy lực</span></h3>
+      <p>Smash như sét đánh, thích kéo pha bóng lên cao rồi dồn đối thủ vào góc sân.</p>
+    </div>
+  </div>
+
+  <div class="player-card">
+    <img src="./img/z7238788308541_6354bc98eb00357f875164b179409902.jpg" class="player-photo">
+    <div class="player-info">
+      <h3>KiênKuro <span>• Bền bỉ – lì lợm</span></h3>
+      <p>Không vội kết thúc, chờ đối thủ mắc sai lầm. Càng đánh lâu càng nguy hiểm.</p>
+    </div>
+  </div>
+
+  <div class="player-card">
+    <img src="./img/z7238788028411_90e318ef2c22b07d5e6b842fadaec364.jpg" class="player-photo">
+    <div class="player-info">
+      <h3>HoánKuro <span>• Kỹ thuật – xoay cổ tay</span></h3>
+      <p>Cầu ngắn, cắt lưới, bỏ nhỏ… đủ chiêu để khiến đối thủ phải chạy “cháy phổi”.</p>
+    </div>
+  </div>
+
+  <div class="player-card">
+    <img src="./img/z7238788028452_047008e38afb300c7ed524fb352bc698.jpg" class="player-photo">
+    <div class="player-info">
+      <h3>QuangKuro <span>• Chiến thuật – đọc tình huống</span></h3>
+      <p>Tập trung vào điều nhịp trận đấu và kiểm soát từng pha cầu.</p>
+    </div>
+  </div>
+</section>
+
+
+    <!-- SCORING -->
+    <section id="scoring" class="section fade-in">
+      <div class="section-header">
+        <div>
+          <div class="section-tag">Ví dụ cách tính điểm</div>
+          <h2>Bảng xếp hạng &amp; hiệu số</h2>
+        </div>
+        <p>
+          Bảng dưới minh họa cách cộng trừ điểm tương tự hình bạn gửi: tính theo
+          <strong>trận thắng</strong>, sau đó đến <strong>hiệu số set</strong>, rồi <strong>hiệu số điểm</strong>.
+        </p>
+      </div>
+
+      <div class="score-layout">
+        <div class="glass-card">
+          <table class="score-table">
+            <thead>
+              <tr>
+                <th>Người chơi</th>
+                <th>Trận thắng</th>
+                <th>Set thắng</th>
+                <th>Set thua</th>
+                <th>Hiệu số set</th>
+                <th>Điểm ghi</th>
+                <th>Điểm thua</th>
+                <th>Hiệu số điểm</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>QuangKuro</td>
+                <td><span class="counter" data-count="3">0</span></td>
+                <td><span class="counter" data-count="6">0</span></td>
+                <td><span class="counter" data-count="2">0</span></td>
+                <td class="score-highlight">+4</td>
+                <td><span class="counter" data-count="168">0</span></td>
+                <td><span class="counter" data-count="142">0</span></td>
+                <td class="score-highlight">+26</td>
+              </tr>
+              <tr>
+                <td>ĐứcKuro</td>
+                <td><span class="counter" data-count="2">0</span></td>
+                <td><span class="counter" data-count="5">0</span></td>
+                <td><span class="counter" data-count="4">0</span></td>
+                <td class="score-highlight">+1</td>
+                <td><span class="counter" data-count="182">0</span></td>
+                <td><span class="counter" data-count="176">0</span></td>
+                <td class="score-highlight">+6</td>
+              </tr>
+              <tr>
+                <td>KiênKuro</td>
+                <td><span class="counter" data-count="2">0</span></td>
+                <td><span class="counter" data-count="4">0</span></td>
+                <td><span class="counter" data-count="4">0</span></td>
+                <td>0</td>
+                <td><span class="counter" data-count="160">0</span></td>
+                <td><span class="counter" data-count="163">0</span></td>
+                <td>-3</td>
+              </tr>
+              <tr>
+                <td>AnKuro</td>
+                <td><span class="counter" data-count="1">0</span></td>
+                <td><span class="counter" data-count="2">0</span></td>
+                <td><span class="counter" data-count="5">0</span></td>
+                <td>-3</td>
+                <td><span class="counter" data-count="139">0</span></td>
+                <td><span class="counter" data-count="170">0</span></td>
+                <td>-31</td>
+              </tr>
+              <tr>
+                <td>HoánKuro</td>
+                <td><span class="counter" data-count="2">0</span></td>
+                <td><span class="counter" data-count="4">0</span></td>
+                <td><span class="counter" data-count="6">0</span></td>
+                <td>-2</td>
+                <td><span class="counter" data-count="181">0</span></td>
+                <td><span class="counter" data-count="179">0</span></td>
+                <td>+2</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="score-note">
+            Các số liệu trên chỉ là ví dụ minh họa. Khi áp dụng thực tế, bạn điền điểm từng set
+            rồi tổng hợp lại theo đúng trận của giải.
+          </p>
+        </div>
+
+        <div class="glass-card">
+          <h3 style="margin-bottom: 10px; font-size: 1.1rem;">Quy tắc xếp hạng đề xuất</h3>
+          <ul class="rules-list">
+            <li>
+              <strong>1. Trận thắng:</strong> Ai thắng nhiều trận hơn sẽ đứng trên.
+            </li>
+            <li>
+              <strong>2. Hiệu số set:</strong> Nếu bằng trận thắng, so sánh
+              <em>Set thắng - Set thua</em>.
+            </li>
+            <li>
+              <strong>3. Hiệu số điểm:</strong> Nếu vẫn bằng, so sánh
+              <em>Điểm ghi - Điểm thua</em>.
+            </li>
+            <li>
+              <strong>4. Đối đầu trực tiếp:</strong> Nếu mọi chỉ số đều cân, ưu tiên người thắng
+              trong trận đối đầu giữa hai vận động viên.
+            </li>
+            <li>
+              <strong>5. Bốc thăm / đấu thêm:</strong> Trường hợp đặc biệt (ba người bằng nhau…)
+              có thể bốc thăm hoặc tổ chức mini tie-break.
+            </li>
+          </ul>
+          <p class="rules-footnote">
+            Bạn hoàn toàn có thể chỉnh sửa quy tắc cho khớp với luật riêng của giải, giữ nguyên
+            cấu trúc bảng cho đẹp là được.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+  <div class="footer-container">
+    
+    <div class="footer-info">
+      <h3>Kuro Open Winter 2025</h3>
+      <p>Giải cầu lông giao lưu – fairplay – nâng tầm phong trào cộng đồng.</p>
+      <p class="copyright">© 2025 Bản quyền thuộc về <strong>AnKuro</strong></p>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Liên hệ</h4>
+      <ul>
+        <li><a href="mailto:ankuro@gmail.com"><i class="fa-solid fa-envelope"></i>  Email: ankuro@gmail.com</a></li>
+        <li><a href="https://zalo.me/" target="_blank"><i class="fa-brands fa-facebook-messenger"></i>  Zalo Chat</a></li>
+        <li><a href="https://www.facebook.com/hozianw" target="_blank"><i class="fa-brands fa-facebook"></i>  Facebook</a></li>
+        <li><a href="https://www.instagram.com/hozi.anw_/" target="_blank"><i class="fa-brands fa-instagram"></i>  Instagram</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-social">
+      <h4>Kết nối nhanh</h4>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/hozianw" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://www.instagram.com/hozi.anw_/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://zalo.me/" target="_blank"><i class="fa-brands fa-facebook-messenger"></i></a>
+        <a href="mailto:ankuro@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+
+  <script>
+    // --- COUNTDOWN ---
+    const countdownContainer = document.getElementById("countdown");
+    const eventDate = new Date("2025-01-01T08:00:00"); // giờ khai mạc tùy chỉnh
+
+    function createSegment(value, label) {
+      const seg = document.createElement("div");
+      seg.className = "count-segment";
+
+      const num = document.createElement("span");
+      num.className = "count-number";
+      num.textContent = value;
+
+      const lab = document.createElement("span");
+      lab.className = "count-label";
+      lab.textContent = label;
+
+      seg.appendChild(num);
+      seg.appendChild(lab);
+      return seg;
+    }
+
+    function renderCountdown() {
+      const now = new Date();
+      const diff = eventDate - now;
+
+      countdownContainer.innerHTML = "";
+
+      if (diff <= 0) {
+        countdownContainer.textContent = "Giải đấu đã khai mạc – vào sân thôi!";
+        countdownContainer.style.fontWeight = "600";
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / (24 * 3600));
+      const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      countdownContainer.appendChild(
+        createSegment(days.toString().padStart(2, "0"), "Ngày")
+      );
+      countdownContainer.appendChild(
+        createSegment(hours.toString().padStart(2, "0"), "Giờ")
+      );
+      countdownContainer.appendChild(
+        createSegment(minutes.toString().padStart(2, "0"), "Phút")
+      );
+      countdownContainer.appendChild(
+        createSegment(seconds.toString().padStart(2, "0"), "Giây")
+      );
+    }
+
+    renderCountdown();
+    setInterval(renderCountdown, 1000);
+
+    // --- SMOOTH SCROLL FOR NAV ---
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const targetId = link.getAttribute("href");
+        const target = document.querySelector(targetId);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
+    // --- SCROLL FADE-IN EFFECT ---
+    const fadeEls = document.querySelectorAll(".fade-in");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18 }
+    );
+
+    fadeEls.forEach((el) => observer.observe(el));
+
+    // --- STAT COUNTERS (BẢNG ĐIỂM) ---
+    let countersStarted = false;
+    const counters = document.querySelectorAll(".counter");
+
+    function startCounters() {
+      if (countersStarted) return;
+      countersStarted = true;
+
+      counters.forEach((el) => {
+        const target = parseInt(el.dataset.count, 10) || 0;
+        let current = 0;
+        const steps = 60;
+        const increment = target / steps;
+
+        const interval = setInterval(() => {
+          current += increment;
+          if ((increment >= 0 && current >= target) || (increment < 0 && current <= target)) {
+            current = target;
+            clearInterval(interval);
+          }
+          el.textContent = Math.round(current);
+        }, 18);
+      });
+    }
+
+    const scoreSection = document.querySelector("#scoring");
+    const scoreObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            startCounters();
+            scoreObserver.disconnect();
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+    if (scoreSection) scoreObserver.observe(scoreSection);
+  </script>
+</body>
+</html>
