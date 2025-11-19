@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Kuro Open Winter 2025 - Giải cầu lông mở rộng</title>
+  <title>Kuro Open Winter 2026 - Giải cầu lông mở rộng</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Google Font -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -385,6 +385,25 @@
     }
 
     /* SECTIONS */
+   .winner-label {
+  font-weight: bold;
+  color: #4fd1ff;
+  background: rgba(79, 209, 255, 0.12);
+  padding: 4px 10px;
+  border-radius: 10px;
+}
+
+.schedule-table td,
+.schedule-table th {
+  text-align: center;
+  padding: 10px;
+}
+
+.schedule-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+
 
     main {
       padding: 0 7vw 60px;
@@ -709,7 +728,7 @@
     <nav class="nav">
       <div class="logo">
         Kuro Open
-        <span>Winter 2025</span>
+        <span>Winter 2026</span>
       </div>
       <ul class="nav-links">
         <li><a href="#schedule">Lịch thi đấu</a></li>
@@ -721,9 +740,9 @@
     <div class="hero-main">
       <div class="hero-text">
         <p class="tag">Giải cầu lông mở rộng</p>
-        <h1>Kuro Open Winter 2025</h1>
+        <h1>Kuro Open Winter 2026</h1>
         <p class="subtitle">
-          Ngày <strong>01/01/2025</strong> • Nhà thi đấu Kuro Arena • Thể thức vòng tròn 5 người
+          Ngày <strong>01/01/2026</strong> • Nhà thi đấu TDT Bùi Xương Trạch • Thể thức vòng tròn 5 người
         </p>
 
         <div class="hero-badges">
@@ -738,9 +757,10 @@
         </div>
 
         <div class="hero-actions">
-          <a href="#schedule" class="btn primary">
-            Xem lịch thi đấu
-          </a>
+          <a href="#live-scoreboard" class="btn primary">
+  Xem lịch thi đấu
+</a>
+
           <a href="#scoring" class="btn ghost">
             Ví dụ cách tính điểm
           </a>
@@ -754,7 +774,7 @@
             <div class="hero-card-big">5 tay vợt – 10 trận – 1 nhà vô địch</div>
 
             <div class="hero-card-detail">
-              <span><strong>Thời gian:</strong> 01/01/2025</span>
+              <span><strong>Thời gian:</strong> 01/01/2026</span>
               <span><strong>Thể thức:</strong> Vòng tròn 1 lượt</span>
             </div>
 
@@ -789,64 +809,29 @@
   </header>
 
   <main>
-    <!-- LỊCH THI ĐẤU -->
-    <section id="schedule" class="section fade-in">
-      <div class="section-header">
-        <div>
-          <div class="section-tag">Lịch thi đấu</div>
-          <h2>Bảng vòng tròn Kuro Open</h2>
-        </div>
-        <p>
-          Mỗi tay vợt sẽ gặp tất cả những người còn lại một lần. Bảng dưới đây mô phỏng đủ
-          <strong>5 vòng</strong> với <strong>10 trận đấu</strong>, kèm người được nghỉ mỗi vòng.
-        </p>
-      </div>
+    <!-- LỊCH THI ĐẤU  tỉ số-->
+    <div id="live-scoreboard" class="glass-card">
+  <h3 style="margin-bottom: 10px;">📊 Live Scoreboard - Kuro Open Winter 2025</h3>
+  <table class="schedule-table" id="score-table">
+    <thead>
+      <tr>
+        <th>Vòng</th>
+        <th>Ngày thi đấu</th>
+        <th>Trận đấu</th>
+        <th>Set 1</th>
+        <th>Set 2</th>
+        <th>Set 3</th>
+        <th>Người thắng</th>
+        <th>Tổng điểm</th>
+      </tr>
+    </thead>
+    <tbody id="score-data">
+      <tr><td colspan="8">⏳ Đang tải dữ liệu...</td></tr>
+    </tbody>
+  </table>
+</div>
 
-      <div class="glass-card">
-        <table class="schedule-table">
-          <thead>
-            <tr>
-              <th>Vòng</th>
-              <th>Trận 1</th>
-              <th>Trận 2</th>
-              <th>Nghỉ</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="col-round">Vòng 1</td>
-              <td>QuangKuro vs ĐứcKuro</td>
-              <td>KiênKuro vs AnKuro</td>
-              <td><span class="label-rest">HoánKuro</span></td>
-            </tr>
-            <tr>
-              <td class="col-round">Vòng 2</td>
-              <td>QuangKuro vs KiênKuro</td>
-              <td>HoánKuro vs ĐứcKuro</td>
-              <td><span class="label-rest">AnKuro</span></td>
-            </tr>
-            <tr>
-              <td class="col-round">Vòng 3</td>
-              <td>QuangKuro vs AnKuro</td>
-              <td>KiênKuro vs HoánKuro</td>
-              <td><span class="label-rest">ĐứcKuro</span></td>
-            </tr>
-            <tr>
-              <td class="col-round">Vòng 4</td>
-              <td>QuangKuro vs HoánKuro</td>
-              <td>ĐứcKuro vs AnKuro</td>
-              <td><span class="label-rest">KiênKuro</span></td>
-            </tr>
-            <tr>
-              <td class="col-round">Vòng 5</td>
-              <td>ĐứcKuro vs KiênKuro</td>
-              <td>AnKuro vs HoánKuro</td>
-              <td><span class="label-rest">QuangKuro</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+
 
     <!-- PLAYERS -->
     <section id="players" class="players-section">
@@ -1007,8 +992,7 @@
             </li>
           </ul>
           <p class="rules-footnote">
-            Bạn hoàn toàn có thể chỉnh sửa quy tắc cho khớp với luật riêng của giải, giữ nguyên
-            cấu trúc bảng cho đẹp là được.
+            Hoàn toàn có thể chỉnh sửa quy tắc cho khớp với luật riêng của giải.
           </p>
         </div>
       </div>
@@ -1019,7 +1003,7 @@
   <div class="footer-container">
     
     <div class="footer-info">
-      <h3>Kuro Open Winter 2025</h3>
+      <h3>Kuro Open Winter 2026</h3>
       <p>Giải cầu lông giao lưu – fairplay – nâng tầm phong trào cộng đồng.</p>
       <p class="copyright">© 2025 Bản quyền thuộc về <strong>AnKuro</strong></p>
     </div>
@@ -1052,7 +1036,7 @@
   <script>
     // --- COUNTDOWN ---
     const countdownContainer = document.getElementById("countdown");
-    const eventDate = new Date("2025-01-01T08:00:00"); // giờ khai mạc tùy chỉnh
+    const eventDate = new Date("2026-01-01T08:00:00"); // giờ khai mạc tùy chỉnh
 
     function createSegment(value, label) {
       const seg = document.createElement("div");
@@ -1172,6 +1156,46 @@
       { threshold: 0.25 }
     );
     if (scoreSection) scoreObserver.observe(scoreSection);
-  </script>
+
+  // tỉ số
+const sheetID = "1eaundnDhT_a7r8vC9mj0VqtLAWwUaKKFuhrrWdfZVEw";
+const sheetNumber = "1";
+const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetNumber}`;
+
+fetch(url)
+  .then(res => res.text())
+  .then(data => {
+    const json = JSON.parse(data.substring(47, data.length - 2));
+    const rows = json.table.rows;
+
+    let html = "";
+
+    rows.forEach(r => {
+      // Xử lý ngày thi đấu: ưu tiên lấy định dạng hiển thị (formatted) nếu có
+      let ngayThiDau = r.c[1]?.f || r.c[1]?.v || "";
+
+      html += `
+        <tr>
+          <td>${r.c[0]?.v || ""}</td>
+          <td>${ngayThiDau}</td>
+          <td>${r.c[2]?.v || ""}</td>
+          <td><strong>${r.c[3]?.v || "-"}</strong></td>
+          <td><strong>${r.c[4]?.v || "-"}</strong></td>
+          <td><strong>${r.c[5]?.v || "-"}</strong></td>
+          <td><span class="winner-label">${r.c[6]?.v || ""}</span></td>
+          <td>${r.c[7]?.v || ""}</td>
+        </tr>`;
+    });
+
+    document.getElementById("score-data").innerHTML = html;
+  })
+  .catch(() => {
+    document.getElementById("score-data").innerHTML =
+      "<tr><td colspan='8'>Không tải được dữ liệu </td></tr>";
+  });
+
+
+</script>
+
 </body>
 </html>
