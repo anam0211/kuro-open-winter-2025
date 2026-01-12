@@ -789,6 +789,16 @@
       color: var(--text-main);
       outline: none;
     }
+    .table-scroll{
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.score-table{
+  min-width: 1000px; /* vì bạn có 11 cột, nên để rộng hơn */
+}
+
   </style>
 </head>
 
@@ -930,33 +940,36 @@
 
     <!-- STANDINGS -->
     <section id="standings" class="section fade-in">
-      <div class="glass-card">
-        <h3 style="margin:0 0 10px;">🏆 Bảng xếp hạng vòng bảng</h3>
+  <div class="glass-card">
+    <h3 style="margin:0 0 10px;">🏆 Bảng xếp hạng vòng bảng</h3>
 
-        <table class="score-table" id="standings-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Người chơi</th>
-              <th>Điểm trận</th>
-              <th>Thắng</th>
-              <th>Thua</th>
-              <th>Set thắng</th>
-              <th>Set thua</th>
-              <th>HS set</th>
-              <th>Điểm ghi</th>
-              <th>Điểm thua</th>
-              <th>HS điểm</th>
-            </tr>
-          </thead>
-          <tbody id="standings-body"></tbody>
-        </table>
+    <div class="table-scroll">
+      <table class="score-table" id="standings-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Người chơi</th>
+            <th>Điểm trận</th>
+            <th>Thắng</th>
+            <th>Thua</th>
+            <th>Set thắng</th>
+            <th>Set thua</th>
+            <th>HS set</th>
+            <th>Điểm ghi</th>
+            <th>Điểm thua</th>
+            <th>HS điểm</th>
+          </tr>
+        </thead>
+        <tbody id="standings-body"></tbody>
+      </table>
+    </div>
 
-        <p style="margin:10px 0 0; opacity:.85;">
-          Khi đủ kết quả vòng bảng, hệ thống tự sinh bán kết &amp; chung kết.
-        </p>
-      </div>
-    </section>
+    <p style="margin:10px 0 0; opacity:.85;">
+      Khi đủ kết quả vòng bảng, hệ thống tự sinh bán kết &amp; chung kết.
+    </p>
+  </div>
+</section>
+
 
     <!-- BRACKET -->
     <section id="bracket" class="section fade-in">
