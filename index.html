@@ -5,11 +5,17 @@
   <meta charset="UTF-8" />
   <title>Kuro Open Winter 2026 - Giải cầu lông mở rộng</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Google Font -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+  <!-- FAVICON: icon trái cầu lông -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <!-- (tuỳ chọn) cho iPhone/iPad -->
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
+
 
   <style>
     :root {
@@ -55,17 +61,12 @@
       content: "";
       position: fixed;
       inset: 0;
-      /* Giảm độ tối để ảnh nền rõ hơn */
       background: radial-gradient(circle at top left, rgba(79, 209, 255, 0.12), transparent 55%),
         radial-gradient(circle at bottom right, rgba(255, 156, 245, 0.18), transparent 55%),
         linear-gradient(to bottom, rgba(3, 7, 18, 0.55), rgba(15, 23, 42, 0.72));
       backdrop-filter: blur(4px);
-      /* trước là 10px → giảm để ảnh rõ hơn */
       z-index: -1;
     }
-
-
-    /* NAV + HERO */
 
     header.hero {
       min-height: 100vh;
@@ -236,6 +237,8 @@
       transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
       position: relative;
       overflow: hidden;
+      user-select: none;
+      white-space: nowrap;
     }
 
     .btn.primary {
@@ -260,6 +263,12 @@
       background: rgba(15, 23, 42, 0.9);
       transform: translateY(-1px);
       border-color: rgba(191, 219, 254, 0.8);
+    }
+
+    .btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none !important;
     }
 
     .hero-visual {
@@ -388,70 +397,6 @@
       }
     }
 
-    /* SECTIONS */
-
-    /* Hiển thị dạng thẻ (card) khi ở màn hình nhỏ, kể cả điện thoại lớn */
-    @media (max-width: 768px) {
-
-      .schedule-table,
-      .schedule-table thead,
-      .schedule-table tbody,
-      .schedule-table th,
-      .schedule-table td,
-      .schedule-table tr {
-        display: block;
-        width: 100%;
-      }
-
-      .schedule-table thead {
-        display: none;
-      }
-
-      .schedule-table tr {
-        background: rgba(255, 255, 255, 0.05);
-        margin-bottom: 15px;
-        padding: 12px 14px;
-        border-radius: 14px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
-        transition: transform 0.2s ease;
-      }
-
-      .schedule-table tr:hover {
-        transform: scale(1.01);
-        background: rgba(255, 255, 255, 0.08);
-      }
-
-      .schedule-table td {
-        display: flex;
-        justify-content: space-between;
-        padding: 6px 10px;
-        font-size: 14px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      }
-
-      .schedule-table td:last-child {
-        border-bottom: none;
-      }
-
-      .schedule-table td::before {
-        content: attr(data-label);
-        font-weight: 600;
-        color: #4fd1ff;
-        margin-right: 10px;
-      }
-
-      .winner-label {
-        display: inline-block;
-        padding: 6px 12px;
-        font-size: 13px;
-        border-radius: 12px;
-        background: rgba(79, 209, 255, 0.15);
-        color: #4fd1ff;
-        font-weight: bold;
-      }
-    }
-
-
     main {
       padding: 0 7vw 60px;
     }
@@ -513,8 +458,6 @@
       opacity: 1;
     }
 
-    /* TABLES */
-
     table {
       width: 100%;
       border-collapse: collapse;
@@ -555,20 +498,107 @@
       box-shadow: 0 10px 25px rgba(15, 23, 42, 0.9);
     }
 
-    .col-round {
-      font-weight: 600;
-      color: #e0f2fe;
+    .score-highlight {
+      color: #bef264;
+      font-weight: 500;
     }
 
-    .label-rest {
-      font-size: 0.78rem;
-      padding: 4px 8px;
+    .pill-mini {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(248, 250, 252, 0.05);
-      border: 1px dashed rgba(148, 163, 255, 0.5);
+      border: 1px solid rgba(148, 163, 255, 0.45);
+      background: rgba(15, 23, 42, 0.65);
+      font-size: .82rem;
+      opacity: .95;
     }
 
-    /* PLAYERS */
+    .winner-label {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      border-radius: 12px;
+      background: rgba(79, 209, 255, 0.15);
+      color: #4fd1ff;
+      font-weight: bold;
+    }
+
+    .danger-label {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      border-radius: 12px;
+      background: rgba(255, 107, 107, 0.14);
+      color: #ff8a8a;
+      font-weight: 600;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile responsive table to cards */
+    @media (max-width: 768px) {
+
+      .schedule-table,
+      .schedule-table thead,
+      .schedule-table tbody,
+      .schedule-table th,
+      .schedule-table td,
+      .schedule-table tr {
+        display: block;
+        width: 100%;
+      }
+
+      .schedule-table thead {
+        display: none;
+      }
+
+      .schedule-table tr {
+        background: rgba(255, 255, 255, 0.05);
+        margin-bottom: 15px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+        transition: transform 0.2s ease;
+      }
+
+      .schedule-table tr:hover {
+        transform: scale(1.01);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .schedule-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 10px;
+        font-size: 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        white-space: normal;
+      }
+
+      .schedule-table td:last-child {
+        border-bottom: none;
+      }
+
+      .schedule-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #4fd1ff;
+        margin-right: 10px;
+        flex: 0 0 auto;
+      }
+    }
 
     .players-section {
       padding: 60px 7vw;
@@ -627,9 +657,6 @@
       }
     }
 
-
-    /* SCORING */
-
     .score-layout {
       display: grid;
       grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
@@ -684,29 +711,9 @@
       margin-top: 8px;
     }
 
-    .score-highlight {
-      color: #bef264;
-      font-weight: 500;
-    }
-
     .counter {
       font-variant-numeric: tabular-nums;
     }
-
-    /* FADE-IN EFFECT */
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* FOOTER */
 
     footer {
       background: rgba(10, 15, 35, 0.92);
@@ -770,6 +777,18 @@
       font-size: 0.85rem;
       color: #94a3b8;
     }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, .55);
+    }
+
+    dialog input,
+    dialog select {
+      background: rgba(15, 23, 42, .9);
+      border: 1px solid rgba(148, 163, 255, .35);
+      color: var(--text-main);
+      outline: none;
+    }
   </style>
 </head>
 
@@ -781,7 +800,9 @@
         <span>Winter 2026</span>
       </div>
       <ul class="nav-links">
-        <li><a href="#schedule">Lịch thi đấu</a></li>
+        <li><a href="#live-scoreboard">Lịch thi đấu</a></li>
+        <li><a href="#standings">Bảng xếp hạng</a></li>
+        <li><a href="#bracket">Playoff</a></li>
         <li><a href="#players">Vận động viên</a></li>
         <li><a href="#scoring">Cách tính điểm</a></li>
       </ul>
@@ -792,13 +813,14 @@
         <p class="tag">Giải cầu lông mở rộng</p>
         <h1>Kuro Open Winter 2026</h1>
         <p class="subtitle">
-          Ngày <strong>01/01/2026</strong> • Nhà thi đấu TDT Bùi Xương Trạch • Thể thức vòng tròn 5 người
+          Ngày <strong>01/01/2026</strong> • Nhà thi đấu TDT Bùi Xương Trạch • Thể thức vòng tròn 5 người → bán kết →
+          chung kết
         </p>
 
         <div class="hero-badges">
           <div class="badge-chip">Đơn nam phong trào</div>
-          <div class="badge-chip">Điểm số chi tiết từng set</div>
-          <div class="badge-chip">Highlight &amp; tổng kết sau giải</div>
+          <div class="badge-chip">Live tính set &amp; điểm</div>
+          <div class="badge-chip">Top 4 vào bán kết</div>
         </div>
 
         <div class="countdown-wrap">
@@ -807,13 +829,8 @@
         </div>
 
         <div class="hero-actions">
-          <a href="#live-scoreboard" class="btn primary">
-            Xem lịch thi đấu
-          </a>
-
-          <a href="#scoring" class="btn ghost">
-            Ví dụ cách tính điểm
-          </a>
+          <a href="#live-scoreboard" class="btn primary">Xem lịch thi đấu</a>
+          <a href="#scoring" class="btn ghost">Ví dụ cách tính điểm</a>
         </div>
       </div>
 
@@ -821,35 +838,33 @@
         <div class="hero-card">
           <div class="hero-card-inner">
             <div class="hero-card-title">Bảng đấu Kuro</div>
-            <div class="hero-card-big">5 tay vợt – 10 trận – 1 nhà vô địch</div>
+            <div class="hero-card-big">5 tay vợt – 10 trận – Top 4 vào bán kết</div>
 
             <div class="hero-card-detail">
               <span><strong>Thời gian:</strong> 01/01/2026</span>
-              <span><strong>Thể thức:</strong> Vòng tròn 1 lượt</span>
+              <span><strong>Thể thức:</strong> RR → BK → CK</span>
             </div>
 
             <div class="hero-mini-table">
               <div class="hero-mini-row">
-                <span>Vòng 1</span>
-                <span>AnKuro vs KiênKuro</span>
+                <span>BK</span>
+                <span>H1 vs H4 • H2 vs H3</span>
               </div>
               <div class="hero-mini-row">
-                <span>Vòng 3</span>
-                <span>QuangKuro vs AnKuro</span>
+                <span>Tiebreak</span>
+                <span>Điểm trận → đối đầu → HS set → HS điểm</span>
               </div>
               <div class="hero-mini-row">
-                <span>Vòng 5</span>
-                <span>ĐứcKuro vs KiênKuro</span>
+                <span>Quản trị</span>
+                <span>Admin khoá/mở nhập điểm</span>
               </div>
               <div class="hero-mini-row">
-                <span>Nghỉ luân phiên</span>
-                <span>Ai cũng có 1 vòng nghỉ</span>
+                <span>Dữ liệu</span>
+                <span>LocalStorage + Export/Import</span>
               </div>
             </div>
 
-            <div class="pill">
-              🔥 Trực tiếp đếm set &amp; điểm • Ưu tiên hiệu số nếu bằng trận thắng
-            </div>
+            <div class="pill">🔥 Live scoreboard • Bracket tự sinh • Có WO/RET</div>
           </div>
           <span class="glow-orb orb-1"></span>
           <span class="glow-orb orb-2"></span>
@@ -859,31 +874,173 @@
   </header>
 
   <main>
-    <!-- LỊCH THI ĐẤU  tỉ số-->
+    <!-- LIVE SCOREBOARD -->
     <div id="live-scoreboard" class="glass-card">
-      <h3 style="margin-bottom: 10px;">📊 Live Scoreboard - Kuro Open Winter 2025</h3>
-      <table class="schedule-table" id="score-table">
+      <div style="display:flex; gap:12px; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <h3 style="margin:0;">📊 Live Scoreboard - Kuro Open Winter 2026</h3>
+          <div id="status-pill" class="pill-mini"></div>
+        </div>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <select id="player-filter" class="btn ghost" style="padding:10px 14px;">
+            <option value="ALL">Tất cả VĐV</option>
+          </select>
+
+          <button class="btn ghost" id="btn-sync" type="button">Sync từ Google Sheet</button>
+          <button class="btn ghost" id="btn-lock" type="button">Chốt vòng bảng: Tắt</button>
+
+          <button class="btn ghost" id="btn-reset" type="button">Reset dữ liệu</button>
+          <button class="btn ghost" id="btn-export" type="button">Export JSON</button>
+          <button class="btn ghost" id="btn-admin" type="button">Admin: Khoá</button>
+
+          <label class="btn ghost" style="cursor:pointer;">
+            Import JSON <input type="file" id="file-import" accept="application/json" hidden>
+          </label>
+        </div>
+      </div>
+
+      <p style="margin:10px 0 0; opacity:.85;">
+        Vòng bảng: <strong>Top 4</strong> vào bán kết (1-4, 2-3). Xếp hạng theo:
+        <strong>Điểm trận</strong> → <strong>Đối đầu</strong> → <strong>Hiệu số set</strong> → <strong>Hiệu số
+          điểm</strong>.
+      </p>
+
+      <table class="schedule-table" id="score-table" style="margin-top:12px;">
         <thead>
           <tr>
+            <th>Giai đoạn</th>
             <th>Vòng</th>
-            <th>Ngày thi đấu</th>
-            <th>Trận đấu</th>
+            <th>Trận</th>
             <th>Set 1</th>
             <th>Set 2</th>
             <th>Set 3</th>
             <th>Người thắng</th>
-            <th>Tổng điểm</th>
+            <th>Ghi chú</th>
+            <th>Thao tác</th>
           </tr>
         </thead>
         <tbody id="score-data">
           <tr>
-            <td colspan="8">⏳ Đang tải dữ liệu...</td>
+            <td colspan="9">⏳ Đang tải dữ liệu...</td>
           </tr>
         </tbody>
       </table>
     </div>
 
+    <!-- STANDINGS -->
+    <section id="standings" class="section fade-in">
+      <div class="glass-card">
+        <h3 style="margin:0 0 10px;">🏆 Bảng xếp hạng vòng bảng</h3>
 
+        <table class="score-table" id="standings-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Người chơi</th>
+              <th>Điểm trận</th>
+              <th>Thắng</th>
+              <th>Thua</th>
+              <th>Set thắng</th>
+              <th>Set thua</th>
+              <th>HS set</th>
+              <th>Điểm ghi</th>
+              <th>Điểm thua</th>
+              <th>HS điểm</th>
+            </tr>
+          </thead>
+          <tbody id="standings-body"></tbody>
+        </table>
+
+        <p style="margin:10px 0 0; opacity:.85;">
+          Khi đủ kết quả vòng bảng, hệ thống tự sinh bán kết &amp; chung kết.
+        </p>
+      </div>
+    </section>
+
+    <!-- BRACKET -->
+    <section id="bracket" class="section fade-in">
+      <div class="glass-card">
+        <h3 style="margin:0 0 10px;">🥇 Bán kết - Chung kết</h3>
+
+        <div style="display:grid; grid-template-columns:1fr; gap:12px;">
+          <div>
+            <h4 style="margin:0 0 8px;">Bán kết</h4>
+            <div id="semis-wrap"></div>
+          </div>
+
+          <div>
+            <h4 style="margin:0 0 8px;">Chung kết</h4>
+            <div id="final-wrap"></div>
+          </div>
+
+          <div>
+            <h4 style="margin:0 0 8px;">Tranh hạng 3 (tuỳ chọn)</h4>
+            <div id="third-wrap"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCORE INPUT MODAL -->
+    <dialog id="score-dialog" style="max-width:560px; width:92%; border:none; border-radius:14px; padding:0;">
+      <form method="dialog" style="padding:14px 14px 10px;">
+        <h3 id="dlg-title" style="margin:0 0 8px;">Nhập tỉ số</h3>
+        <p id="dlg-sub" style="margin:0 0 12px; opacity:.85;"></p>
+
+        <div style="display:grid; gap:10px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div>
+              <label style="font-size:.9rem; opacity:.9;">Set 1 (A-B)</label>
+              <input id="s1" placeholder="21-18" style="width:100%; padding:10px; border-radius:10px;">
+            </div>
+            <div>
+              <label style="font-size:.9rem; opacity:.9;">Set 2 (A-B)</label>
+              <input id="s2" placeholder="17-21" style="width:100%; padding:10px; border-radius:10px;">
+            </div>
+          </div>
+
+          <div>
+            <label style="font-size:.9rem; opacity:.9;">Set 3 (A-B) (nếu có)</label>
+            <input id="s3" placeholder="21-19" style="width:100%; padding:10px; border-radius:10px;">
+          </div>
+
+          <div style="display:grid; gap:10px; margin-top:8px;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <div>
+                <label style="font-size:.9rem; opacity:.9;">Loại kết quả</label>
+                <select id="result-type" style="width:100%; padding:10px; border-radius:10px;">
+                  <option value="NORMAL">Bình thường</option>
+                  <option value="WO">WO (bỏ cuộc)</option>
+                  <option value="RET">RET (chấn thương)</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:.9rem; opacity:.9;">Chọn người thắng (WO/RET)</label>
+                <select id="forced-winner" style="width:100%; padding:10px; border-radius:10px;">
+                  <option value="A">Người A</option>
+                  <option value="B">Người B</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label style="font-size:.9rem; opacity:.9;">Ghi chú</label>
+              <input id="note" placeholder="VD: Delay 10p / WO / RET..."
+                style="width:100%; padding:10px; border-radius:10px;">
+            </div>
+          </div>
+
+          <p id="dlg-error" style="margin:0; color:#ff6b6b; display:none;"></p>
+        </div>
+
+        <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:12px;">
+          <button class="btn ghost" id="dlg-clear" type="button">Xoá tỉ số</button>
+          <button class="btn ghost" value="cancel">Huỷ</button>
+          <button class="btn primary" id="dlg-save" value="default">Lưu</button>
+        </div>
+      </form>
+    </dialog>
 
     <!-- PLAYERS -->
     <section id="players" class="players-section">
@@ -931,8 +1088,7 @@
       </div>
     </section>
 
-
-    <!-- SCORING -->
+    <!-- SCORING (demo content giữ nguyên) -->
     <section id="scoring" class="section fade-in">
       <div class="section-header">
         <div>
@@ -940,8 +1096,8 @@
           <h2>Bảng xếp hạng &amp; hiệu số</h2>
         </div>
         <p>
-          Bảng dưới minh họa cách cộng trừ điểm tương tự hình bạn gửi: tính theo
-          <strong>trận thắng</strong>, sau đó đến <strong>hiệu số set</strong>, rồi <strong>hiệu số điểm</strong>.
+          Vòng bảng tính theo <strong>Điểm trận</strong> (thắng = 2, thua = 0),
+          sau đó đến <strong>đối đầu</strong>, <strong>hiệu số set</strong>, rồi <strong>hiệu số điểm</strong>.
         </p>
       </div>
 
@@ -1015,37 +1171,20 @@
           </table>
 
           <p class="score-note">
-            Các số liệu trên chỉ là ví dụ minh họa. Khi áp dụng thực tế, bạn điền điểm từng set
-            rồi tổng hợp lại theo đúng trận của giải.
+            (Demo) Số liệu minh hoạ. Bảng xếp hạng thật nằm ở mục “Bảng xếp hạng vòng bảng” phía trên.
           </p>
         </div>
 
         <div class="glass-card">
           <h3 style="margin-bottom: 10px; font-size: 1.1rem;">Quy tắc xếp hạng đề xuất</h3>
           <ul class="rules-list">
-            <li>
-              <strong>1. Trận thắng:</strong> Ai thắng nhiều trận hơn sẽ đứng trên.
-            </li>
-            <li>
-              <strong>2. Hiệu số set:</strong> Nếu bằng trận thắng, so sánh
-              <em>Set thắng - Set thua</em>.
-            </li>
-            <li>
-              <strong>3. Hiệu số điểm:</strong> Nếu vẫn bằng, so sánh
-              <em>Điểm ghi - Điểm thua</em>.
-            </li>
-            <li>
-              <strong>4. Đối đầu trực tiếp:</strong> Nếu mọi chỉ số đều cân, ưu tiên người thắng
-              trong trận đối đầu giữa hai vận động viên.
-            </li>
-            <li>
-              <strong>5. Bốc thăm / đấu thêm:</strong> Trường hợp đặc biệt (ba người bằng nhau…)
-              có thể bốc thăm hoặc tổ chức mini tie-break.
-            </li>
+            <li><strong>1. Điểm trận:</strong> Thắng = 2, thua = 0.</li>
+            <li><strong>2. Đối đầu trực tiếp:</strong> Nếu chỉ 2 người bằng điểm.</li>
+            <li><strong>3. Hiệu số set:</strong> Set thắng - Set thua.</li>
+            <li><strong>4. Hiệu số điểm:</strong> Điểm ghi - Điểm thua.</li>
+            <li><strong>5. Bốc thăm / đấu thêm:</strong> Nếu vẫn hòa.</li>
           </ul>
-          <p class="rules-footnote">
-            Hoàn toàn có thể chỉnh sửa quy tắc cho khớp với luật riêng của giải.
-          </p>
+          <p class="rules-footnote">Bạn có thể chỉnh quy tắc theo luật riêng của giải.</p>
         </div>
       </div>
     </section>
@@ -1053,11 +1192,10 @@
 
   <footer>
     <div class="footer-container">
-
       <div class="footer-info">
         <h3>Kuro Open Winter 2026</h3>
         <p>Giải cầu lông giao lưu – fairplay – nâng tầm phong trào cộng đồng.</p>
-        <p class="copyright">© 2025 Bản quyền thuộc về <strong>AnKuro</strong></p>
+        <p class="copyright">© 2026 <strong>AnKuro.</strong> Tất cả quyền được bảo lưu </p>
       </div>
 
       <div class="footer-contact">
@@ -1082,70 +1220,64 @@
           <a href="mailto:ankuro@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a>
         </div>
       </div>
-
     </div>
   </footer>
 
-
-
   <script>
-    // --- COUNTDOWN ---
-    const countdownContainer = document.getElementById("countdown");
-    const eventDate = new Date("2026-01-01T08:00:00"); // giờ khai mạc tùy chỉnh
+    // =========================
+    // COUNTDOWN (SAFE) - TẾT 2026
+    // =========================
+    (() => {
+      const countdownContainer = document.getElementById("countdown");
+      if (!countdownContainer) return; // không có #countdown thì bỏ qua, tránh crash toàn bộ script
 
-    function createSegment(value, label) {
-      const seg = document.createElement("div");
-      seg.className = "count-segment";
+      // Mùng 1 Tết Bính Ngọ 2026: 17/02/2026 (giờ VN/TH +07:00)
+      // Nếu bạn muốn đếm tới GIAO THỪA, đổi thành: "2026-02-16T23:59:59+07:00"
+      const eventDate = new Date("2026-02-17T00:00:00+07:00");
 
-      const num = document.createElement("span");
-      num.className = "count-number";
-      num.textContent = value;
-
-      const lab = document.createElement("span");
-      lab.className = "count-label";
-      lab.textContent = label;
-
-      seg.appendChild(num);
-      seg.appendChild(lab);
-      return seg;
-    }
-
-    function renderCountdown() {
-      const now = new Date();
-      const diff = eventDate - now;
-
-      countdownContainer.innerHTML = "";
-
-      if (diff <= 0) {
-        countdownContainer.textContent = "Giải đấu đã khai mạc – vào sân thôi!";
-        countdownContainer.style.fontWeight = "600";
-        return;
+      function createSegment(value, label) {
+        const seg = document.createElement("div");
+        seg.className = "count-segment";
+        const num = document.createElement("span");
+        num.className = "count-number";
+        num.textContent = value;
+        const lab = document.createElement("span");
+        lab.className = "count-label";
+        lab.textContent = label;
+        seg.appendChild(num);
+        seg.appendChild(lab);
+        return seg;
       }
 
-      const totalSeconds = Math.floor(diff / 1000);
-      const days = Math.floor(totalSeconds / (24 * 3600));
-      const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
+      function renderCountdown() {
+        const now = new Date();
+        const diff = eventDate - now;
 
-      countdownContainer.appendChild(
-        createSegment(days.toString().padStart(2, "0"), "Ngày")
-      );
-      countdownContainer.appendChild(
-        createSegment(hours.toString().padStart(2, "0"), "Giờ")
-      );
-      countdownContainer.appendChild(
-        createSegment(minutes.toString().padStart(2, "0"), "Phút")
-      );
-      countdownContainer.appendChild(
-        createSegment(seconds.toString().padStart(2, "0"), "Giây")
-      );
-    }
+        countdownContainer.innerHTML = "";
 
-    renderCountdown();
-    setInterval(renderCountdown, 1000);
+        if (diff <= 0) {
+          countdownContainer.textContent = "Chúc mừng năm mới AE KURO! Vào sân thôi!";
+          countdownContainer.style.fontWeight = "600";
+          return;
+        }
 
-    // --- SMOOTH SCROLL FOR NAV ---
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / (24 * 3600));
+        const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        countdownContainer.appendChild(createSegment(days.toString().padStart(2, "0"), "Ngày"));
+        countdownContainer.appendChild(createSegment(hours.toString().padStart(2, "0"), "Giờ"));
+        countdownContainer.appendChild(createSegment(minutes.toString().padStart(2, "0"), "Phút"));
+        countdownContainer.appendChild(createSegment(seconds.toString().padStart(2, "0"), "Giây"));
+      }
+
+      renderCountdown();
+      setInterval(renderCountdown, 1000);
+    })();
+
+    // Smooth scroll for nav
     document.querySelectorAll('a[href^="#"]').forEach((link) => {
       link.addEventListener("click", (e) => {
         const targetId = link.getAttribute("href");
@@ -1157,7 +1289,7 @@
       });
     });
 
-    // --- SCROLL FADE-IN EFFECT ---
+    // Fade-in on scroll
     const fadeEls = document.querySelectorAll(".fade-in");
     const observer = new IntersectionObserver(
       (entries) => {
@@ -1170,10 +1302,9 @@
       },
       { threshold: 0.18 }
     );
-
     fadeEls.forEach((el) => observer.observe(el));
 
-    // --- STAT COUNTERS (BẢNG ĐIỂM) ---
+    // Counter demo
     let countersStarted = false;
     const counters = document.querySelectorAll(".counter");
 
@@ -1189,7 +1320,7 @@
 
         const interval = setInterval(() => {
           current += increment;
-          if ((increment >= 0 && current >= target) || (increment < 0 && current <= target)) {
+          if (current >= target) {
             current = target;
             clearInterval(interval);
           }
@@ -1212,47 +1343,898 @@
     );
     if (scoreSection) scoreObserver.observe(scoreSection);
 
-    // tỉ số
-    const sheetID = "1eaundnDhT_a7r8vC9mj0VqtLAWwUaKKFuhrrWdfZVEw";
-    const sheetNumber = "1";
-    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetNumber}`;
+    // =========================
+    // APP: LIVE SCOREBOARD
+    // =========================
+    document.addEventListener("DOMContentLoaded", () => {
+      const STORAGE_KEY = "kuro_open_winter_2026_v3";
 
-    fetch(url)
-      .then(res => res.text())
-      .then(data => {
-        const json = JSON.parse(data.substring(47, data.length - 2));
-        const rows = json.table.rows;
+      // ======= CONFIG: đổi theo bạn =======
+      const ADMIN_PIN = "2005"; // đổi PIN
+      const ADMIN_KEY = "kuro_admin_unlocked";
 
-        let html = "";
+      // Sync từ Google Sheet (tuỳ chọn)
+      const SHEET_ID = "1eaundnDhT_a7r8vC9mj0VqtLAWwUaKKFuhrrWdfZVEw";
+      const SHEET_NAME = "1";
+      const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
 
-        rows.forEach(r => {
-          // Xử lý ngày thi đấu: ưu tiên lấy định dạng hiển thị (formatted) nếu có
-          let ngayThiDau = r.c[1]?.f || r.c[1]?.v || "";
-          html += `
-  <tr>
-    <td data-label="Vòng">${r.c[0]?.v || ""}</td>
-    <td data-label="Ngày">${ngayThiDau}</td>
-    <td data-label="Trận đấu">${r.c[2]?.v || ""}</td>
-    <td data-label="Set 1"><strong>${r.c[3]?.v || "-"}</strong></td>
-    <td data-label="Set 2"><strong>${r.c[4]?.v || "-"}</strong></td>
-    <td data-label="Set 3"><strong>${r.c[5]?.v || "-"}</strong></td>
-    <td data-label="Người thắng"><span class="winner-label">${r.c[6]?.v || ""}</span></td>
-    <td data-label="Tổng điểm">${r.c[7]?.v || ""}</td>
-  </tr>`;
+      const players = ["AnKuro", "ĐứcKuro", "KiênKuro", "HoánKuro", "QuangKuro"];
+
+      const $ = (id) => document.getElementById(id);
+
+      // ======= ADMIN =======
+      function isAdmin() { return sessionStorage.getItem(ADMIN_KEY) === "1"; }
+      function setAdmin(on) {
+        sessionStorage.setItem(ADMIN_KEY, on ? "1" : "0");
+        renderAll(); // quan trọng: re-render để bỏ disabled ngay lập tức
+      }
 
 
+      // ======= HELPERS =======
+      function parseSet(str) {
+        if (!str || !str.trim()) return null;
+        const m = str.trim().match(/^(\d{1,2})\s*-\s*(\d{1,2})$/);
+        if (!m) return null;
+        return [Number(m[1]), Number(m[2])];
+      }
+
+      function isValidGameScore(a, b) {
+        if (!Number.isInteger(a) || !Number.isInteger(b)) return false;
+        if (a < 0 || b < 0 || a > 30 || b > 30) return false;
+        if (a === b) return false;
+
+        const max = Math.max(a, b);
+        const min = Math.min(a, b);
+        const diff = max - min;
+
+        if (max < 21) return false;
+        if (max === 30) return (min === 29);
+        if (max >= 21 && max <= 29) {
+          if (min <= 19) return max === 21;
+          return diff === 2;
+        }
+        return false;
+      }
+
+      function bestOf3Winner(sets) {
+        let winA = 0, winB = 0;
+        for (const s of sets) {
+          if (!s) continue;
+          if (s[0] > s[1]) winA++;
+          else winB++;
+        }
+        if (winA >= 2) return "A";
+        if (winB >= 2) return "B";
+        return null;
+      }
+
+      function sumPoints(sets) {
+        let a = 0, b = 0;
+        for (const s of sets) {
+          if (!s) continue;
+          a += s[0]; b += s[1];
+        }
+        return [a, b];
+      }
+
+      // ======= ROUND ROBIN =======
+      function generateRoundRobin(list) {
+        const arr = [...list];
+        if (arr.length % 2 === 1) arr.push("BYE");
+
+        const N = arr.length;
+        const rounds = N - 1;
+        const half = N / 2;
+
+        let rotating = [...arr];
+        const out = [];
+
+        for (let r = 0; r < rounds; r++) {
+          const pairs = [];
+          for (let i = 0; i < half; i++) {
+            const a = rotating[i];
+            const b = rotating[N - 1 - i];
+            if (a !== "BYE" && b !== "BYE") pairs.push([a, b]);
+          }
+          out.push(pairs);
+
+          const fixed = rotating[0];
+          const rest = rotating.slice(1);
+          rest.unshift(rest.pop());
+          rotating = [fixed, ...rest];
+        }
+        return out;
+      }
+
+      // ======= STATE =======
+      function buildInitialMatches() {
+        const rr = generateRoundRobin(players);
+        const groupMatches = [];
+        let idCounter = 1;
+
+        rr.forEach((pairs, idx) => {
+          const roundNo = idx + 1;
+          pairs.forEach(([a, b]) => {
+            groupMatches.push({
+              id: `G${idCounter++}`,
+              stage: "GROUP",
+              round: roundNo,
+              a, b,
+              sets: [null, null, null],
+              winner: null,
+              note: ""
+            });
+          });
         });
 
-        document.getElementById("score-data").innerHTML = html;
-      })
-      .catch(() => {
-        document.getElementById("score-data").innerHTML =
-          "<tr><td colspan='8'>Không tải được dữ liệu </td></tr>";
-      });
+        return {
+          matches: groupMatches,
+          playoff: { semis: [], final: [], third: [] },
+          groupLocked: false,
+          seedTop4: null,
+          lastSyncAt: null
+        };
+      }
 
+      function loadState() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return buildInitialMatches();
+        try {
+          const st = JSON.parse(raw);
+          if (!st.matches || !Array.isArray(st.matches)) return buildInitialMatches();
+          return st;
+        } catch {
+          return buildInitialMatches();
+        }
+      }
+
+      let state = loadState();
+
+      function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      // ======= STANDINGS =======
+      function computeStandings() {
+        const table = new Map();
+        players.forEach(p => table.set(p, { player: p, mp: 0, w: 0, l: 0, sw: 0, sl: 0, pf: 0, pa: 0 }));
+
+        const groupMatches = state.matches.filter(m => m.stage === "GROUP");
+
+        for (const m of groupMatches) {
+          if (!m.winner) continue;
+          const A = table.get(m.a);
+          const B = table.get(m.b);
+
+          let setWinA = 0, setWinB = 0;
+          for (const s of m.sets) {
+            if (!s) continue;
+            if (s[0] > s[1]) setWinA++;
+            else setWinB++;
+          }
+
+          A.sw += setWinA; A.sl += setWinB;
+          B.sw += setWinB; B.sl += setWinA;
+
+          const [pa, pb] = sumPoints(m.sets);
+          A.pf += pa; A.pa += pb;
+          B.pf += pb; B.pa += pa;
+
+          if (m.winner === "A") { A.w++; B.l++; A.mp += 2; }
+          else { B.w++; A.l++; B.mp += 2; }
+        }
+
+        let rows = [...table.values()].map(r => ({ ...r, sd: r.sw - r.sl, pd: r.pf - r.pa }));
+
+        function headToHeadWinner(p1, p2) {
+          const h2h = groupMatches.find(x =>
+            (x.a === p1 && x.b === p2) || (x.a === p2 && x.b === p1)
+          );
+          if (!h2h || !h2h.winner) return null;
+          if (h2h.a === p1 && h2h.winner === "A") return p1;
+          if (h2h.b === p1 && h2h.winner === "B") return p1;
+          return p2;
+        }
+
+        rows.sort((x, y) => {
+          if (y.mp !== x.mp) return y.mp - x.mp;
+
+          const tied = rows.filter(r => r.mp === x.mp);
+          if (tied.length === 2) {
+            const w = headToHeadWinner(tied[0].player, tied[1].player);
+            if (w) return (w === y.player) ? 1 : -1;
+          }
+
+          if (y.sd !== x.sd) return y.sd - x.sd;
+          if (y.pd !== x.pd) return y.pd - x.pd;
+          if (y.pf !== x.pf) return y.pf - x.pf;
+          return x.player.localeCompare(y.player);
+        });
+
+        return rows;
+      }
+
+      function groupCompleted() {
+        return state.matches.filter(m => m.stage === "GROUP").every(m => m.winner !== null);
+      }
+
+      // ======= PLAYOFF =======
+      function ensurePlayoffs() {
+        if (!groupCompleted()) return;
+
+        const standings = computeStandings();
+        const top4 = (state.groupLocked && Array.isArray(state.seedTop4))
+          ? state.seedTop4
+          : standings.slice(0, 4).map(r => r.player);
+
+        const [s1, s2, s3, s4] = top4;
+
+        const existing = state.playoff?.semis?.length ? state.playoff : { semis: [], final: [], third: [] };
+
+        const semis = [
+          existing.semis?.[0] ?? { id: "S1", stage: "SEMI", round: 1, a: s1, b: s4, sets: [null, null, null], winner: null, note: "" },
+          existing.semis?.[1] ?? { id: "S2", stage: "SEMI", round: 1, a: s2, b: s3, sets: [null, null, null], winner: null, note: "" },
+        ];
+        semis[0].a = s1; semis[0].b = s4;
+        semis[1].a = s2; semis[1].b = s3;
+
+        const final = existing.final?.[0] ?? { id: "F1", stage: "FINAL", round: 1, a: "TBD", b: "TBD", sets: [null, null, null], winner: null, note: "" };
+        const third = existing.third?.[0] ?? { id: "T1", stage: "THIRD", round: 1, a: "TBD", b: "TBD", sets: [null, null, null], winner: null, note: "" };
+
+        const semiWinners = semis.map(m => m.winner ? (m.winner === "A" ? m.a : m.b) : null);
+        const semiLosers = semis.map(m => m.winner ? (m.winner === "A" ? m.b : m.a) : null);
+
+        if (semiWinners.every(Boolean)) {
+          final.a = semiWinners[0];
+          final.b = semiWinners[1];
+        } else {
+          final.a = "TBD"; final.b = "TBD";
+          final.sets = [null, null, null]; final.winner = null; final.note = "";
+        }
+
+        if (semiLosers.every(Boolean)) {
+          third.a = semiLosers[0];
+          third.b = semiLosers[1];
+        } else {
+          third.a = "TBD"; third.b = "TBD";
+          third.sets = [null, null, null]; third.winner = null; third.note = "";
+        }
+
+        state.playoff = { semis, final: [final], third: [third] };
+      }
+
+      // ======= RENDER HELPERS =======
+      function stageLabel(stage) {
+        if (stage === "GROUP") return "Vòng bảng";
+        if (stage === "SEMI") return "Bán kết";
+        if (stage === "FINAL") return "Chung kết";
+        if (stage === "THIRD") return "Hạng 3";
+        return stage;
+      }
+
+      function formatSets(sets, idx) {
+        const s = sets[idx];
+        return s ? `${s[0]}-${s[1]}` : "-";
+      }
+
+      function winnerName(m) {
+        if (!m.winner) return "";
+        return m.winner === "A" ? m.a : m.b;
+      }
+
+      function listAllMatches() {
+        return [
+          ...state.matches,
+          ...(state.playoff?.semis ?? []),
+          ...(state.playoff?.final ?? []),
+          ...(state.playoff?.third ?? []),
+        ];
+      }
+
+      function findMatchById(id) {
+        return listAllMatches().find(m => m.id === id) || null;
+      }
+
+      function updateMatchById(id, patch) {
+        const gi = state.matches.findIndex(m => m.id === id);
+        if (gi >= 0) {
+          state.matches[gi] = { ...state.matches[gi], ...patch };
+          return;
+        }
+        for (const key of ["semis", "final", "third"]) {
+          const arr = state.playoff?.[key];
+          const idx = arr?.findIndex(m => m.id === id) ?? -1;
+          if (idx >= 0) {
+            state.playoff[key][idx] = { ...state.playoff[key][idx], ...patch };
+            return;
+          }
+        }
+      }
+
+      function nextMatchId(allMatches) {
+        return allMatches.find(m => !m.winner && m.a !== "TBD" && m.b !== "TBD")?.id ?? null;
+      }
+
+      // ======= FILTER =======
+      function setupFilter() {
+        const sel = $("player-filter");
+        if (!sel) return;
+        sel.innerHTML = `<option value="ALL">Tất cả VĐV</option>` + players.map(p => `<option value="${p}">${p}</option>`).join("");
+        sel.addEventListener("change", () => renderAll());
+      }
+
+      function passFilter(match) {
+        const f = $("player-filter")?.value ?? "ALL";
+        if (f === "ALL") return true;
+        return match.a === f || match.b === f;
+      }
+
+      // ======= RENDER SCOREBOARD =======
+      function renderScoreboard() {
+        const tbody = $("score-data");
+        const all = listAllMatches().filter(passFilter);
+        const nextId = nextMatchId(all);
+
+        tbody.innerHTML = all.map(m => {
+          const isNext = m.id === nextId;
+          const rowStyle = isNext ? `style="outline:2px solid rgba(255,255,255,.22);"` : "";
+
+          const isTBD = (m.a === "TBD" || m.b === "TBD");
+          const isLockedGroup = (state.groupLocked && m.stage === "GROUP");
+          const canEdit = isAdmin() && !isTBD && !isLockedGroup;
+
+          const noteText = m.note || (isNext ? " Trận kế tiếp" : "-");
+          const win = winnerName(m);
+
+          return `
+            <tr ${rowStyle}>
+              <td data-label="Giai đoạn">${stageLabel(m.stage)}</td>
+              <td data-label="Vòng">${m.stage === "GROUP" ? `Vòng ${m.round}` : "-"}</td>
+              <td data-label="Trận"><strong>${m.a}</strong> vs <strong>${m.b}</strong></td>
+              <td data-label="Set 1"><strong>${formatSets(m.sets, 0)}</strong></td>
+              <td data-label="Set 2"><strong>${formatSets(m.sets, 1)}</strong></td>
+              <td data-label="Set 3"><strong>${formatSets(m.sets, 2)}</strong></td>
+              <td data-label="Người thắng">${win ? `<span class="winner-label">${win}</span>` : "-"}</td>
+              <td data-label="Ghi chú">${noteText}</td>
+              <td data-label="Thao tác" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <button type="button" class="btn ghost" data-edit="${m.id}" ${canEdit ? "" : "disabled"}>Nhập</button>
+                <button type="button" class="btn ghost" data-clear="${m.id}" ${canEdit ? "" : "disabled"}>Xoá</button>
+              </td>
+            </tr>
+          `;
+        }).join("");
+
+        if (!tbody.innerHTML.trim()) {
+          tbody.innerHTML = `<tr><td colspan="9">Không có trận nào theo bộ lọc hiện tại.</td></tr>`;
+        }
+      }
+
+      // ======= RENDER STANDINGS =======
+      function renderStandings() {
+        const body = $("standings-body");
+        const rows = computeStandings();
+
+        body.innerHTML = rows.map((r, i) => `
+          <tr>
+            <td>${i + 1}</td>
+            <td><strong>${r.player}</strong></td>
+            <td>${r.mp}</td>
+            <td>${r.w}</td>
+            <td>${r.l}</td>
+            <td>${r.sw}</td>
+            <td>${r.sl}</td>
+            <td class="${r.sd > 0 ? "score-highlight" : ""}">${r.sd}</td>
+            <td>${r.pf}</td>
+            <td>${r.pa}</td>
+            <td class="${r.pd > 0 ? "score-highlight" : ""}">${r.pd}</td>
+          </tr>
+        `).join("");
+      }
+
+      // ======= RENDER BRACKET =======
+      // ======= RENDER BRACKET =======
+      function renderBracket() {
+        ensurePlayoffs();
+
+        const semisWrap = $("semis-wrap");
+        const finalWrap = $("final-wrap");
+        const thirdWrap = $("third-wrap");
+
+        function matchCard(m) {
+          const setsText = m.sets.map(s => (s ? `${s[0]}-${s[1]}` : "-")).join(" | ");
+          const win = winnerName(m);
+          const isTBD = (m.a === "TBD" || m.b === "TBD");
+          const canEdit = isAdmin() && !isTBD;
+
+          return `
+      <div class="glass-card" style="margin-bottom:10px; padding:12px;">
+        <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap;">
+          <div>
+            <div style="opacity:.85; font-size:.9rem;">${m.id}</div>
+            <div style="font-size:1.05rem; margin-top:2px;">
+              <strong>${m.a}</strong> vs <strong>${m.b}</strong>
+            </div>
+            <div style="margin-top:6px; opacity:.9;">Set: ${setsText}</div>
+            <div style="margin-top:6px;">Thắng: ${win ? `<span class="winner-label">${win}</span>` : "-"}</div>
+            <div style="margin-top:6px; opacity:.9;">Ghi chú: ${m.note || "-"}</div>
+          </div>
+
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn ghost" data-edit="${m.id}" ${canEdit ? "" : "disabled"}>Nhập</button>
+            <button type="button" class="btn ghost" data-clear="${m.id}" ${canEdit ? "" : "disabled"}>Xoá</button>
+          </div>
+        </div>
+      </div>
+    `;
+        }
+
+        const semis = state.playoff?.semis ?? [];
+        const final = state.playoff?.final ?? [];
+        const third = state.playoff?.third ?? [];
+
+        semisWrap.innerHTML = semis.length ? semis.map(matchCard).join("") : `<div style="opacity:.85;">Chưa có dữ liệu bán kết.</div>`;
+        finalWrap.innerHTML = final.length ? final.map(matchCard).join("") : `<div style="opacity:.85;">Chưa có dữ liệu chung kết.</div>`;
+        thirdWrap.innerHTML = third.length ? third.map(matchCard).join("") : `<div style="opacity:.85;">Chưa có dữ liệu hạng 3.</div>`;
+      }
+
+      // ======= STATUS / UI =======
+      function fmtTime(ts) {
+        if (!ts) return "-";
+        try {
+          return new Date(ts).toLocaleString("vi-VN");
+        } catch {
+          return "-";
+        }
+      }
+
+      function updateStatusPill() {
+        const el = $("status-pill");
+        if (!el) return;
+
+        const adminTxt = isAdmin() ? "Admin: Mở" : "Admin: Khoá";
+        const lockTxt = state.groupLocked ? "Chốt vòng bảng: Bật" : "Chốt vòng bảng: Tắt";
+        const syncTxt = state.lastSyncAt ? `Sync: ${fmtTime(state.lastSyncAt)}` : "Sync: -";
+
+        el.innerHTML = `
+    <span>${adminTxt}</span>
+    <span style="opacity:.6;">•</span>
+    <span>${lockTxt}</span>
+    <span style="opacity:.6;">•</span>
+    <span>${syncTxt}</span>
+  `;
+      }
+
+      function updateAdminUI() {
+        const btnAdmin = $("btn-admin");
+        const btnLock = $("btn-lock");
+        const btnReset = $("btn-reset");
+        const btnExport = $("btn-export");
+        const btnSync = $("btn-sync");
+
+        const canAdmin = isAdmin();
+
+        if (btnAdmin) {
+          btnAdmin.textContent = canAdmin ? "Admin: Mở" : "Admin: Khoá";
+          btnAdmin.disabled = false;     // <<< QUAN TRỌNG: luôn cho bấm
+          btnAdmin.style.opacity = "";   // <<< luôn rõ
+        }
+
+        if (btnLock) btnLock.textContent = `Chốt vòng bảng: ${state.groupLocked ? "Bật" : "Tắt"}`;
+
+        // Chỉ disable các nút khác (không disable btnAdmin)
+        [btnLock, btnReset, btnExport, btnSync].forEach(b => {
+          if (!b) return;
+          b.disabled = !canAdmin;
+          b.style.opacity = canAdmin ? "" : "0.55";
+        });
+
+        updateStatusPill();
+      }
+
+
+      // ======= MODAL: INPUT SCORE =======
+      const dlg = $("score-dialog");
+      const dlgTitle = $("dlg-title");
+      const dlgSub = $("dlg-sub");
+      const dlgErr = $("dlg-error");
+      const inS1 = $("s1");
+      const inS2 = $("s2");
+      const inS3 = $("s3");
+      const inNote = $("note");
+      const selType = $("result-type");
+      const selForced = $("forced-winner");
+      const btnClearDlg = $("dlg-clear");
+      const btnSaveDlg = $("dlg-save");
+
+      let currentMatchId = null;
+
+      function showDlgError(msg) {
+        if (!dlgErr) return;
+        dlgErr.style.display = msg ? "block" : "none";
+        dlgErr.textContent = msg || "";
+      }
+
+      function openScoreDialog(matchId) {
+        const m = findMatchById(matchId);
+        if (!m) return;
+
+        // chặn nhập nếu bị khoá (vòng bảng) hoặc chưa admin
+        if (!isAdmin()) return;
+        if (state.groupLocked && m.stage === "GROUP") return;
+        if (m.a === "TBD" || m.b === "TBD") return;
+
+        currentMatchId = matchId;
+
+        if (dlgTitle) dlgTitle.textContent = `Nhập tỉ số • ${m.id}`;
+        if (dlgSub) dlgSub.textContent = `${stageLabel(m.stage)} • ${m.a} vs ${m.b}`;
+
+        // fill
+        inS1.value = m.sets?.[0] ? `${m.sets[0][0]}-${m.sets[0][1]}` : "";
+        inS2.value = m.sets?.[1] ? `${m.sets[1][0]}-${m.sets[1][1]}` : "";
+        inS3.value = m.sets?.[2] ? `${m.sets[2][0]}-${m.sets[2][1]}` : "";
+
+        inNote.value = m.note || "";
+        selType.value = "NORMAL";
+        selForced.value = "A";
+        showDlgError("");
+
+        if (dlg && typeof dlg.showModal === "function") dlg.showModal();
+      }
+
+      function clearMatch(matchId) {
+        const m = findMatchById(matchId);
+        if (!m) return;
+        if (!isAdmin()) return;
+        if (state.groupLocked && m.stage === "GROUP") return;
+        if (m.a === "TBD" || m.b === "TBD") return;
+
+        updateMatchById(matchId, { sets: [null, null, null], winner: null, note: "" });
+        ensurePlayoffs();
+        saveState();
+        renderAll();
+      }
+
+      function applyResultToMatch(m, sets, resultType, forcedWinner, note) {
+        // resultType: NORMAL | WO | RET
+        // winner: dựa vào sets hoặc forcedWinner
+        let winner = null;
+
+        if (resultType === "NORMAL") {
+          winner = bestOf3Winner(sets);
+          if (!winner) throw new Error("Chưa xác định được người thắng. Hãy nhập đủ set hợp lệ (Bo3).");
+        } else {
+          // WO/RET: bắt buộc chọn winner
+          winner = forcedWinner === "B" ? "B" : "A";
+
+          // Nếu người dùng không nhập set, ta auto 21-0, 21-0 để BXH có HS set/điểm
+          const hasAnySet = sets.some(s => s && (s[0] !== undefined));
+          if (!hasAnySet) {
+            if (winner === "A") sets = [[21, 0], [21, 0], null];
+            else sets = [[0, 21], [0, 21], null];
+          }
+        }
+
+        // Patch
+        updateMatchById(m.id, {
+          sets,
+          winner,
+          note: note || (resultType !== "NORMAL" ? resultType : "")
+        });
+      }
+
+      // Validate NORMAL: từng set theo luật 21 (deuce đến 30)
+      function validateNormalSets(sets) {
+        const present = sets.filter(Boolean);
+        if (present.length < 2) throw new Error("Thiếu dữ liệu: tối thiểu phải có Set 1 và Set 2.");
+
+        // validate từng set
+        present.forEach((s, idx) => {
+          const ok = isValidGameScore(s[0], s[1]);
+          if (!ok) throw new Error(`Set ${idx + 1} không hợp lệ (${s[0]}-${s[1]}).`);
+        });
+
+        const w = bestOf3Winner(sets);
+        if (!w) throw new Error("Chưa đủ 2 set thắng để kết luận trận (Bo3).");
+
+        // Nếu đã 2-0 thì set3 nên để trống
+        let winA = 0, winB = 0;
+        for (const s of sets) {
+          if (!s) continue;
+          if (s[0] > s[1]) winA++;
+          else winB++;
+        }
+        if ((winA === 2 || winB === 2) && sets[2]) {
+          // vẫn cho phép, nhưng thường không cần
+        }
+      }
+
+      function onSaveDialog() {
+        const m = findMatchById(currentMatchId);
+        if (!m) return;
+
+        try {
+          const s1 = parseSet(inS1.value);
+          const s2 = parseSet(inS2.value);
+          const s3 = parseSet(inS3.value);
+
+          const resultType = selType.value;
+          const forced = selForced.value;
+          const note = (inNote.value || "").trim();
+
+          const sets = [s1, s2, s3];
+
+          if (resultType === "NORMAL") {
+            validateNormalSets(sets);
+          } else {
+            // WO/RET: nếu người dùng có nhập set thì kiểm tra format (parseSet đã làm)
+            // và nếu có điểm thì cũng validate theo luật game (để tránh nhập 100-0)
+            sets.filter(Boolean).forEach((s, idx) => {
+              if (!isValidGameScore(s[0], s[1])) {
+                throw new Error(`Set ${idx + 1} không hợp lệ (${s[0]}-${s[1]}).`);
+              }
+            });
+          }
+
+          applyResultToMatch(m, sets, resultType, forced, note);
+
+          ensurePlayoffs();
+          saveState();
+          renderAll();
+
+          if (dlg) dlg.close();
+        } catch (e) {
+          showDlgError(e?.message || "Lỗi dữ liệu. Vui lòng kiểm tra lại.");
+        }
+      }
+
+      // ======= EXPORT / IMPORT =======
+      function exportJson() {
+        const data = JSON.stringify(state, null, 2);
+        const blob = new Blob([data], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "kuro_open_winter_2026.json";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      function importJsonFile(file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const obj = JSON.parse(String(reader.result || ""));
+            if (!obj || !Array.isArray(obj.matches)) throw new Error("File JSON không đúng cấu trúc.");
+            state = obj;
+            saveState();
+            renderAll();
+          } catch (e) {
+            alert(e?.message || "Không import được JSON.");
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      // ======= SYNC GOOGLE SHEET (GVIZ) =======
+      // Gợi ý cấu trúc sheet (linh hoạt):
+      // A: id, B: stage, C: a, D: b, E: set1, F: set2, G: set3, H: winner(optional), I: note(optional)
+      // winner có thể để trống -> auto theo set.
+      function safeGvizJson(text) {
+        // GVIZ trả về: google.visualization.Query.setResponse({...});
+        const start = text.indexOf("{");
+        const end = text.lastIndexOf("}");
+        if (start < 0 || end < 0) throw new Error("Không đọc được dữ liệu GVIZ.");
+        return JSON.parse(text.slice(start, end + 1));
+      }
+
+      function deriveWinnerFromSets(sets) {
+        const w = bestOf3Winner(sets);
+        return w; // "A"/"B"/null
+      }
+
+      async function syncFromSheet() {
+        try {
+          const res = await fetch(SHEET_URL, { cache: "no-store" });
+          const text = await res.text();
+          const json = safeGvizJson(text);
+
+          const rows = json?.table?.rows || [];
+          if (!rows.length) throw new Error("Sheet không có dữ liệu.");
+
+          const col = (r, i) => (r?.c?.[i]?.v ?? "").toString().trim();
+
+          // Build map current matches
+          const all = listAllMatches();
+          const map = new Map(all.map(m => [m.id, m]));
+
+          let updated = 0;
+
+          for (const r of rows) {
+            const id = col(r, 0);
+            if (!id) continue;
+            if (!map.has(id)) continue;
+
+            const m = map.get(id);
+
+            const stage = col(r, 1) || m.stage;
+            const a = col(r, 2) || m.a;
+            const b = col(r, 3) || m.b;
+
+            const s1 = parseSet(col(r, 4));
+            const s2 = parseSet(col(r, 5));
+            const s3 = parseSet(col(r, 6));
+            const sets = [s1, s2, s3];
+
+            // winner: nếu sheet có cột thì ưu tiên, không thì auto theo set
+            const wRaw = col(r, 7);
+            let winner = null;
+            if (wRaw) {
+              if (wRaw === "A" || wRaw === "B") winner = wRaw;
+              else if (wRaw === a) winner = "A";
+              else if (wRaw === b) winner = "B";
+            }
+            if (!winner) winner = deriveWinnerFromSets(sets);
+
+            const note = col(r, 8) || "";
+
+            // Update
+            updateMatchById(id, { stage, a, b, sets, winner, note });
+            updated++;
+          }
+
+          state.lastSyncAt = Date.now();
+          ensurePlayoffs();
+          saveState();
+          renderAll();
+
+          alert(`Sync OK: cập nhật ${updated} dòng (theo ID khớp).`);
+        } catch (e) {
+          alert(e?.message || "Sync thất bại.");
+        }
+      }
+
+      // ======= LOCK GROUP =======
+      function toggleGroupLock() {
+        if (!isAdmin()) return;
+
+        state.groupLocked = !state.groupLocked;
+        if (state.groupLocked) {
+          // chốt top4 ngay lúc bật
+          const standings = computeStandings();
+          state.seedTop4 = standings.slice(0, 4).map(r => r.player);
+        } else {
+          state.seedTop4 = null;
+        }
+        saveState();
+        renderAll();
+      }
+
+      // ======= MAIN RENDER =======
+      function renderAll() {
+        renderScoreboard();
+        renderStandings();
+        renderBracket();
+        updateAdminUI();
+        updateStatusPill();
+      }
+
+      // ======= EVENT BINDINGS =======
+      function bindEvents() {
+        // Delegate click for edit/clear buttons
+        document.addEventListener("click", (ev) => {
+          const t = ev.target;
+          if (!(t instanceof HTMLElement)) return;
+
+          const editId = t.getAttribute("data-edit");
+          const clearId = t.getAttribute("data-clear");
+
+          if (editId) {
+            openScoreDialog(editId);
+          }
+          if (clearId) {
+            const m = findMatchById(clearId);
+            if (!m) return;
+            if (!isAdmin()) return;
+            if (state.groupLocked && m.stage === "GROUP") return;
+
+            const ok = confirm(`Xoá tỉ số trận ${m.id} (${m.a} vs ${m.b})?`);
+            if (ok) clearMatch(clearId);
+          }
+        });
+
+        if (btnClearDlg) {
+          btnClearDlg.addEventListener("click", () => {
+            inS1.value = "";
+            inS2.value = "";
+            inS3.value = "";
+            inNote.value = "";
+            selType.value = "NORMAL";
+            selForced.value = "A";
+            showDlgError("");
+          });
+        }
+
+        if (btnSaveDlg) {
+          btnSaveDlg.addEventListener("click", (e) => {
+            // giữ dialog không tự đóng nếu lỗi
+            e.preventDefault();
+            onSaveDialog();
+          });
+        }
+
+        // Admin button
+        const btnAdmin = $("btn-admin");
+        if (btnAdmin) {
+          btnAdmin.addEventListener("click", () => {
+            if (isAdmin()) {
+              setAdmin(false);
+              return;
+            }
+            const pin = prompt("Nhập Admin PIN:");
+            if ((pin ?? "").trim() === ADMIN_PIN) setAdmin(true);
+            else alert("Sai PIN.");
+
+
+          });
+        }
+
+        // Lock group
+        const btnLock = $("btn-lock");
+        if (btnLock) btnLock.addEventListener("click", toggleGroupLock);
+
+        // Reset
+        const btnReset = $("btn-reset");
+        if (btnReset) {
+          btnReset.addEventListener("click", () => {
+            if (!isAdmin()) return;
+            const ok = confirm("Reset toàn bộ dữ liệu giải? (Không thể hoàn tác)");
+            if (!ok) return;
+            state = buildInitialMatches();
+            saveState();
+            renderAll();
+          });
+        }
+
+        // Export
+        const btnExport = $("btn-export");
+        if (btnExport) btnExport.addEventListener("click", () => {
+          if (!isAdmin()) return;
+          exportJson();
+        });
+
+        // Import
+        const fileImport = $("file-import");
+        if (fileImport) {
+          fileImport.addEventListener("change", () => {
+            const f = fileImport.files?.[0];
+            if (!f) return;
+            if (!isAdmin()) {
+              alert("Cần Admin để import.");
+              fileImport.value = "";
+              return;
+            }
+            importJsonFile(f);
+            fileImport.value = "";
+          });
+        }
+
+        // Sync
+        const btnSync = $("btn-sync");
+        if (btnSync) btnSync.addEventListener("click", () => {
+          if (!isAdmin()) return;
+          syncFromSheet();
+        });
+      }
+
+      // ======= INIT =======
+      setupFilter();
+      bindEvents();
+      updateAdminUI();
+      renderAll();
+
+    }); // <-- ĐÓNG document.addEventListener("DOMContentLoaded", ...)
 
   </script>
-
-</body>
-
-</html>
