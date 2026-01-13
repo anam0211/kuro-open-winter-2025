@@ -965,6 +965,137 @@
     padding: 10px 14px;
   }
 }
+/* ===== NEXT MATCH CARD ===== */
+.nextmatch-card{
+  padding: 16px;
+}
+
+.nextmatch-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap: 12px;
+  flex-wrap:wrap;
+  margin-bottom: 12px;
+}
+
+.nextmatch-tag{
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  opacity: .85;
+  color: var(--text-soft);
+  margin-bottom: 4px;
+}
+
+.nextmatch-body{
+  display:grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 14px;
+  align-items:center;
+  padding: 14px 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.14);
+  background:
+    radial-gradient(circle at top left, rgba(79,209,255,.14), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(255,156,245,.14), transparent 55%),
+    rgba(15, 23, 42, .60);
+  position: relative;
+  overflow:hidden;
+}
+
+.nextmatch-player{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap: 8px;
+}
+
+.nextmatch-avatar{
+  width: 92px;
+  height: 92px;
+  border-radius: 22px;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 18px 38px rgba(0,0,0,.55);
+}
+
+.nextmatch-name{
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.nextmatch-sub{
+  font-size: .88rem;
+  color: rgba(226,232,240,.88);
+  opacity: .9;
+}
+
+.nextmatch-vs{
+  position: relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-width: 90px;
+  gap: 8px;
+}
+
+.vs-glow{
+  position:absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  filter: blur(18px);
+  background: radial-gradient(circle, rgba(79,209,255,.35), rgba(255,156,245,.22), transparent 70%);
+  animation: vsPulse 1.8s ease-in-out infinite alternate;
+  opacity:.85;
+  pointer-events:none;
+}
+
+@keyframes vsPulse{
+  from{ transform: scale(.95); opacity:.65; }
+  to{ transform: scale(1.08); opacity:.95; }
+}
+
+.vs-badge{
+  position: relative;
+  z-index: 1;
+  font-weight: 800;
+  letter-spacing: .12em;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: linear-gradient(120deg, rgba(79,209,255,.26), rgba(255,156,245,.22));
+  box-shadow: 0 18px 40px rgba(0,0,0,.55);
+  text-transform: uppercase;
+}
+
+.vs-text{
+  position: relative;
+  z-index: 1;
+  font-size: .82rem;
+  color: rgba(226,232,240,.92);
+  opacity: .9;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+@media (max-width: 768px){
+  .nextmatch-body{
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .nextmatch-vs{
+    min-width: auto;
+  }
+  .nextmatch-avatar{
+    width: 86px;
+    height: 86px;
+  }
+}
+
 
   </style>
 </head>
@@ -1066,6 +1197,42 @@
       </div>
     </div>
   </section>
+<section class="fade-in" id="next-match">
+  <div class="glass-card nextmatch-card">
+    <div class="nextmatch-head">
+      <div>
+        <div class="nextmatch-tag">Trận đấu tiếp theo</div>
+        <h3 style="margin:0;">⚔️ Next Match</h3>
+      </div>
+
+      <div id="nextmatch-meta" class="pill-mini" style="white-space:nowrap;"></div>
+    </div>
+
+    <div id="nextmatch-body" class="nextmatch-body">
+      <div class="nextmatch-player">
+        <img id="nextmatch-a-avatar" class="nextmatch-avatar" src="" alt="Player A">
+        <div class="nextmatch-name" id="nextmatch-a-name">TBD</div>
+        <div class="nextmatch-sub" id="nextmatch-a-sub">-</div>
+      </div>
+
+      <div class="nextmatch-vs">
+        <div class="vs-glow"></div>
+        <div class="vs-badge">VS</div>
+        <div class="vs-text" id="nextmatch-stage">-</div>
+      </div>
+
+      <div class="nextmatch-player">
+        <img id="nextmatch-b-avatar" class="nextmatch-avatar" src="" alt="Player B">
+        <div class="nextmatch-name" id="nextmatch-b-name">TBD</div>
+        <div class="nextmatch-sub" id="nextmatch-b-sub">-</div>
+      </div>
+    </div>
+
+    <div id="nextmatch-empty" style="display:none; opacity:.85; margin-top:10px;">
+      Chưa có trận “kế tiếp” (có thể đang chờ đủ seed playoff hoặc tất cả trận đã hoàn tất).
+    </div>
+  </div>
+</section>
 
   <main>
     <!-- LIVE SCOREBOARD -->
@@ -2150,6 +2317,56 @@
           img.src = url;
           img.onerror = () => { img.src = DEFAULT_AVATAR; };
         }
+        function renderNextMatch() {
+  const metaEl = document.getElementById("nextmatch-meta");
+  const emptyEl = document.getElementById("nextmatch-empty");
+  const bodyEl  = document.getElementById("nextmatch-body");
+
+  const aName = document.getElementById("nextmatch-a-name");
+  const bName = document.getElementById("nextmatch-b-name");
+  const aAvt  = document.getElementById("nextmatch-a-avatar");
+  const bAvt  = document.getElementById("nextmatch-b-avatar");
+  const aSub  = document.getElementById("nextmatch-a-sub");
+  const bSub  = document.getElementById("nextmatch-b-sub");
+  const stageEl = document.getElementById("nextmatch-stage");
+
+  if (!metaEl || !emptyEl || !bodyEl || !aName || !bName || !aAvt || !bAvt || !aSub || !bSub || !stageEl) return;
+
+  // Lấy "trận kế tiếp" theo đúng logic bạn đang dùng
+  const all = listAllMatches().filter(m => m.a !== "TBD" && m.b !== "TBD");
+  const id = nextMatchId(all);
+  const m = id ? findMatchById(id) : null;
+
+  if (!m) {
+    bodyEl.style.display = "none";
+    emptyEl.style.display = "block";
+    metaEl.textContent = "Next: -";
+    return;
+  }
+
+  bodyEl.style.display = "grid";
+  emptyEl.style.display = "none";
+
+  aName.textContent = m.a;
+  bName.textContent = m.b;
+
+  aAvt.src = safeAvatarUrl(m.a);
+  bAvt.src = safeAvatarUrl(m.b);
+  aAvt.onerror = () => { aAvt.src = DEFAULT_AVATAR; };
+  bAvt.onerror = () => { bAvt.src = DEFAULT_AVATAR; };
+
+  // Subtext gợi ý: giai đoạn + mã trận
+  const stg = stageLabel(m.stage);
+  stageEl.textContent = stg;
+  aSub.textContent = m.id;
+  bSub.textContent = m.id;
+
+  // Meta bên phải: hiển thị Sync/Lock để user hiểu trạng thái
+  const lockTxt = state.groupLocked ? "Chốt: Bật" : "Chốt: Tắt";
+  const syncTxt = state.lastSyncAt ? `Sync: ${fmtTime(state.lastSyncAt)}` : "Sync: -";
+  metaEl.innerHTML = `<span>${lockTxt}</span><span style="opacity:.6;">•</span><span>${syncTxt}</span>`;
+}
+
 
         // ---------- Render Standings ----------
         function renderStandings() {
@@ -2594,6 +2811,7 @@
           renderStandings();
           renderBracket();
           renderTop1Honor();
+          renderNextMatch();
           updateAdminUI();
           maybeCelebrateChampion();
 
