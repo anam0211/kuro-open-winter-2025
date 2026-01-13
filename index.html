@@ -5,13 +5,6 @@
   <meta charset="UTF-8" />
   <title>Kuro Open Winter 2026 - Giải cầu lông mở rộng</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- FAVICON: icon trái cầu lông -->
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
-  <!-- (tuỳ chọn) cho iPhone/iPad -->
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
@@ -789,85 +782,189 @@
       color: var(--text-main);
       outline: none;
     }
-    .table-scroll{
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
 
-.score-table{
-  min-width: 1000px; /* vì bạn có 11 cột, nên để rộng hơn */
-}
-.champion-overlay{
-  position: fixed;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  background: rgba(0,0,0,.62);
-  backdrop-filter: blur(8px);
-}
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
 
-.champion-overlay.show{ display: flex; }
+    .score-table {
+      min-width: 1000px;
+      /* vì bạn có 11 cột, nên để rộng hơn */
+    }
 
-#confetti-canvas{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+    .champion-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      background: rgba(0, 0, 0, .62);
+      backdrop-filter: blur(8px);
+    }
+
+    .champion-overlay.show {
+      display: flex;
+    }
+
+    #confetti-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .champion-card {
+      position: relative;
+      z-index: 1;
+      width: min(520px, 92vw);
+      border-radius: 22px;
+      padding: 22px 18px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, .18);
+      background:
+        radial-gradient(circle at top left, rgba(79, 209, 255, .22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(255, 156, 245, .22), transparent 55%),
+        rgba(7, 16, 40, 0.88);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, .85);
+      animation: championPop .45s ease-out both;
+    }
+
+    @keyframes championPop {
+      from {
+        transform: translateY(14px) scale(.98);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .champion-trophy {
+      font-size: 3rem;
+      filter: drop-shadow(0 10px 24px rgba(79, 209, 255, .35));
+      margin-bottom: 6px;
+    }
+
+    .champion-title {
+      font-size: .9rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      opacity: .85;
+    }
+
+    .champion-name {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 8px 0 6px;
+      background: linear-gradient(120deg, #ffffff, #e5f6ff, #a5b4fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .champion-sub {
+      font-size: .92rem;
+      color: rgba(226, 232, 240, .9);
+      margin-bottom: 14px;
+    }
+
+    /* ===== Mobile performance fixes ===== */
+    @media (max-width: 900px) {
+      body {
+        background-attachment: scroll;
+        /* tránh giật trên iOS/Android */
+      }
+    }
+
+    /* ===== Actions cell styling ===== */
+    .actions-cell {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    /* Mobile: nút dễ bấm, không bị dồn */
+    @media (max-width:768px) {
+      .actions-cell {
+        justify-content: space-between;
+      }
+
+      .actions-cell .btn {
+        flex: 1;
+        /* 2 nút chia đều */
+        justify-content: center;
+        /* căn giữa chữ */
+        padding: 10px 12px;
+      }
+    }
+
+    /* ===== Toolbar responsive ===== */
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    @media (max-width:768px) {
+      .toolbar {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 6px;
+      }
+
+      .toolbar::-webkit-scrollbar {
+        height: 6px;
+      }
+    }
+
+    /* ===== Reduce heavy effects on mobile ===== */
+    @media (max-width:768px) {
+      :root {
+        --blur: 12px;
+        /* giảm blur */
+      }
+
+      .hero-card,
+      .glass-card {
+        box-shadow: 0 12px 28px rgba(0, 0, 0, .65);
+      }
+
+      body::before {
+        backdrop-filter: blur(2px);
+        /* nhẹ hơn */
+      }
+    }
+    /* ===== Fix chữ bị cắt trong toolbar (mobile) ===== */
+@media (max-width: 768px){
+  .toolbar{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+  }
+
+  /* Nút và select KHÔNG được co lại -> chữ không bị cắt */
+  .toolbar .btn,
+  .toolbar select{
+    flex: 0 0 auto;     /* không shrink */
+    flex-shrink: 0;     /* chắc chắn không co */
+    width: max-content; /* rộng theo nội dung */
+  }
+
+  /* Tăng padding để nhìn rõ hơn */
+  .toolbar .btn{
+    padding: 10px 14px;
+  }
 }
-
-.champion-card{
-  position: relative;
-  z-index: 1;
-  width: min(520px, 92vw);
-  border-radius: 22px;
-  padding: 22px 18px;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,.18);
-  background:
-    radial-gradient(circle at top left, rgba(79,209,255,.22), transparent 55%),
-    radial-gradient(circle at bottom right, rgba(255,156,245,.22), transparent 55%),
-    rgba(7, 16, 40, 0.88);
-  box-shadow: 0 25px 70px rgba(0,0,0,.85);
-  animation: championPop .45s ease-out both;
-}
-
-@keyframes championPop{
-  from{ transform: translateY(14px) scale(.98); opacity: 0; }
-  to{ transform: translateY(0) scale(1); opacity: 1; }
-}
-
-.champion-trophy{
-  font-size: 3rem;
-  filter: drop-shadow(0 10px 24px rgba(79,209,255,.35));
-  margin-bottom: 6px;
-}
-
-.champion-title{
-  font-size: .9rem;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  opacity: .85;
-}
-
-.champion-name{
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 8px 0 6px;
-  background: linear-gradient(120deg, #ffffff, #e5f6ff, #a5b4fc);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.champion-sub{
-  font-size: .92rem;
-  color: rgba(226,232,240,.9);
-  margin-bottom: 14px;
-}
-
 
   </style>
 </head>
@@ -952,23 +1049,23 @@
       </div>
     </div>
   </header>
-<section class="fade-in" id="honor">
-  <div class="glass-card" style="padding:16px;">
-    <h3 style="margin:0 0 10px;">Vinh danh Top 1</h3>
+  <section class="fade-in" id="honor">
+    <div class="glass-card" style="padding:16px;">
+      <h3 style="margin:0 0 10px;">Vinh danh Top 1</h3>
 
-    <div id="top1-card" style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
-      <img id="top1-avatar" alt="Top 1 avatar"
-           style="width:84px;height:84px;border-radius:18px;object-fit:cover;border:1px solid rgba(255,255,255,.18);"
-           src="" />
+      <div id="top1-card" style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+        <img id="top1-avatar" alt="Top 1 avatar"
+          style="width:84px;height:84px;border-radius:18px;object-fit:cover;border:1px solid rgba(255,255,255,.18);"
+          src="" />
 
-      <div style="min-width:220px;">
-        <div id="top1-name" style="font-size:1.2rem;font-weight:700;">-</div>
-        <div id="top1-meta" style="opacity:.85;margin-top:4px;">-</div>
-        <div id="top1-updated" style="opacity:.65;margin-top:4px;font-size:.9rem;">-</div>
+        <div style="min-width:220px;">
+          <div id="top1-name" style="font-size:1.2rem;font-weight:700;">-</div>
+          <div id="top1-meta" style="opacity:.85;margin-top:4px;">-</div>
+          <div id="top1-updated" style="opacity:.65;margin-top:4px;font-size:.9rem;">-</div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <main>
     <!-- LIVE SCOREBOARD -->
@@ -979,7 +1076,7 @@
           <div id="status-pill" class="pill-mini"></div>
         </div>
 
-        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+        <div class="toolbar">
           <select id="player-filter" class="btn ghost" style="padding:10px 14px;">
             <option value="ALL">Tất cả VĐV</option>
           </select>
@@ -1027,35 +1124,35 @@
 
     <!-- STANDINGS -->
     <section id="standings" class="section fade-in">
-  <div class="glass-card">
-    <h3 style="margin:0 0 10px;">🏆 Bảng xếp hạng vòng bảng</h3>
+      <div class="glass-card">
+        <h3 style="margin:0 0 10px;">🏆 Bảng xếp hạng vòng bảng</h3>
 
-    <div class="table-scroll">
-      <table class="score-table" id="standings-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Người chơi</th>
-            <th>Điểm trận</th>
-            <th>Thắng</th>
-            <th>Thua</th>
-            <th>Set thắng</th>
-            <th>Set thua</th>
-            <th>HS set</th>
-            <th>Điểm ghi</th>
-            <th>Điểm thua</th>
-            <th>HS điểm</th>
-          </tr>
-        </thead>
-        <tbody id="standings-body"></tbody>
-      </table>
-    </div>
+        <div class="table-scroll">
+          <table class="score-table" id="standings-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Người chơi</th>
+                <th>Điểm trận</th>
+                <th>Thắng</th>
+                <th>Thua</th>
+                <th>Set thắng</th>
+                <th>Set thua</th>
+                <th>HS set</th>
+                <th>Điểm ghi</th>
+                <th>Điểm thua</th>
+                <th>HS điểm</th>
+              </tr>
+            </thead>
+            <tbody id="standings-body"></tbody>
+          </table>
+        </div>
 
-    <p style="margin:10px 0 0; opacity:.85;">
-      Khi đủ kết quả vòng bảng, hệ thống tự sinh bán kết &amp; chung kết.
-    </p>
-  </div>
-</section>
+        <p style="margin:10px 0 0; opacity:.85;">
+          Khi đủ kết quả vòng bảng, hệ thống tự sinh bán kết &amp; chung kết.
+        </p>
+      </div>
+    </section>
 
 
     <!-- BRACKET -->
@@ -1289,20 +1386,20 @@
       </div>
     </section>
   </main>
-<div id="champion-overlay" class="champion-overlay" aria-hidden="true">
-  <canvas id="confetti-canvas"></canvas>
+  <div id="champion-overlay" class="champion-overlay" aria-hidden="true">
+    <canvas id="confetti-canvas"></canvas>
 
-  <div class="champion-card">
-    <div class="champion-trophy">🏆</div>
-    <div class="champion-title">Nhà vô địch</div>
-    <div id="champion-name" class="champion-name">TBD</div>
-    <div class="champion-sub">Kuro Open Winter 2026</div>
+    <div class="champion-card">
+      <div class="champion-trophy">🏆</div>
+      <div class="champion-title">Nhà vô địch</div>
+      <div id="champion-name" class="champion-name">TBD</div>
+      <div class="champion-sub">Kuro Open Winter 2026</div>
 
-    <button id="btn-champion-close" class="btn primary" type="button">
-      Đóng vinh danh
-    </button>
+      <button id="btn-champion-close" class="btn primary" type="button">
+        Đóng vinh danh
+      </button>
+    </div>
   </div>
-</div>
 
   <footer>
     <div class="footer-container">
@@ -1338,648 +1435,648 @@
   </footer>
 
   <script>
-/* =========================================================
-   KURO OPEN WINTER 2026 - FULL JS (Revised)
-   - Safe DOM-ready
-   - Google Sheet API (GET list + POST update)
-   - Anti-overlap sync, smarter polling
-   - Playoff reset when seed changes
-   - Champion overlay + confetti
-========================================================= */
+    /* =========================================================
+       KURO OPEN WINTER 2026 - FULL JS (Revised)
+       - Safe DOM-ready
+       - Google Sheet API (GET list + POST update)
+       - Anti-overlap sync, smarter polling
+       - Playoff reset when seed changes
+       - Champion overlay + confetti
+    ========================================================= */
 
-(function () {
-  function onReady(fn) {
-    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
-    else fn();
-  }
-
-  // =========================
-  // COUNTDOWN
-  // =========================
-  function initCountdown() {
-    const countdownContainer = document.getElementById("countdown");
-    if (!countdownContainer) return;
-
-    const eventDate = new Date("2026-02-17T00:00:00+07:00");
-
-    function createSegment(value, label) {
-      const seg = document.createElement("div");
-      seg.className = "count-segment";
-      const num = document.createElement("span");
-      num.className = "count-number";
-      num.textContent = value;
-      const lab = document.createElement("span");
-      lab.className = "count-label";
-      lab.textContent = label;
-      seg.appendChild(num);
-      seg.appendChild(lab);
-      return seg;
-    }
-
-    function renderCountdown() {
-      const now = new Date();
-      const diff = eventDate - now;
-
-      countdownContainer.innerHTML = "";
-
-      if (diff <= 0) {
-        countdownContainer.textContent = "Chúc mừng năm mới AE KURO! Vào sân thôi!";
-        countdownContainer.style.fontWeight = "600";
-        return;
+    (function () {
+      function onReady(fn) {
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
+        else fn();
       }
 
-      const totalSeconds = Math.floor(diff / 1000);
-      const days = Math.floor(totalSeconds / (24 * 3600));
-      const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
+      // =========================
+      // COUNTDOWN
+      // =========================
+      function initCountdown() {
+        const countdownContainer = document.getElementById("countdown");
+        if (!countdownContainer) return;
 
-      countdownContainer.appendChild(createSegment(days.toString().padStart(2, "0"), "Ngày"));
-      countdownContainer.appendChild(createSegment(hours.toString().padStart(2, "0"), "Giờ"));
-      countdownContainer.appendChild(createSegment(minutes.toString().padStart(2, "0"), "Phút"));
-      countdownContainer.appendChild(createSegment(seconds.toString().padStart(2, "0"), "Giây"));
-    }
+        const eventDate = new Date("2026-02-17T00:00:00+07:00");
 
-    renderCountdown();
-    setInterval(renderCountdown, 1000);
-  }
-
-  // =========================
-  // UI: Smooth scroll, Fade-in, Demo counters
-  // =========================
-  function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach((link) => {
-      link.addEventListener("click", (e) => {
-        const targetId = link.getAttribute("href");
-        const target = document.querySelector(targetId);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        function createSegment(value, label) {
+          const seg = document.createElement("div");
+          seg.className = "count-segment";
+          const num = document.createElement("span");
+          num.className = "count-number";
+          num.textContent = value;
+          const lab = document.createElement("span");
+          lab.className = "count-label";
+          lab.textContent = label;
+          seg.appendChild(num);
+          seg.appendChild(lab);
+          return seg;
         }
-      });
-    });
-  }
 
-  function initFadeIn() {
-    const fadeEls = document.querySelectorAll(".fade-in");
-    if (!fadeEls.length) return;
+        function renderCountdown() {
+          const now = new Date();
+          const diff = eventDate - now;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
+          countdownContainer.innerHTML = "";
+
+          if (diff <= 0) {
+            countdownContainer.textContent = "Chúc mừng năm mới AE KURO! Vào sân thôi!";
+            countdownContainer.style.fontWeight = "600";
+            return;
           }
-        });
-      },
-      { threshold: 0.18 }
-    );
 
-    fadeEls.forEach((el) => observer.observe(el));
-  }
+          const totalSeconds = Math.floor(diff / 1000);
+          const days = Math.floor(totalSeconds / (24 * 3600));
+          const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+          const minutes = Math.floor((totalSeconds % 3600) / 60);
+          const seconds = totalSeconds % 60;
 
-  function initDemoCounters() {
-    let countersStarted = false;
-    const counters = document.querySelectorAll(".counter");
-    if (!counters.length) return;
-
-    function startCounters() {
-      if (countersStarted) return;
-      countersStarted = true;
-
-      counters.forEach((el) => {
-        const target = parseInt(el.dataset.count, 10) || 0;
-        let current = 0;
-        const steps = 60;
-        const increment = target / steps;
-
-        const interval = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            current = target;
-            clearInterval(interval);
-          }
-          el.textContent = Math.round(current);
-        }, 18);
-      });
-    }
-
-    const scoreSection = document.querySelector("#scoring");
-    if (!scoreSection) return;
-
-    const scoreObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            startCounters();
-            scoreObserver.disconnect();
-          }
-        });
-      },
-      { threshold: 0.25 }
-    );
-
-    scoreObserver.observe(scoreSection);
-  }
-
-  // =========================
-  // APP: LIVE SCOREBOARD
-  // =========================
-  function initApp() {
-    const STORAGE_KEY = "kuro_open_winter_2026_v4_api";
-    const ADMIN_PIN = "2005";
-    const ADMIN_KEY = "kuro_admin_unlocked";
-
-    // URL Web App Apps Script (/exec)
-    const SHEET_API_URL =
-      "https://script.google.com/macros/s/AKfycbwS-1CJFE4gPuxKDSK7yxYYOPQ_l1qDeXaFSaeI1JV0CbYkffHRBYXv3urSTkUu5CjA/exec";
-
-    const players = ["AnKuro", "ĐứcKuro", "KiênKuro", "HoánKuro", "QuangKuro"];
-    const $ = (id) => document.getElementById(id);
-
-    // ---------- Admin ----------
-    function isAdmin() {
-      return sessionStorage.getItem(ADMIN_KEY) === "1";
-    }
-    function setAdmin(on) {
-      sessionStorage.setItem(ADMIN_KEY, on ? "1" : "0");
-      renderAll();
-    }
-
-    // ---------- Helpers ----------
-    function parseSet(str) {
-      if (!str || !String(str).trim()) return null;
-      const m = String(str).trim().match(/^(\d{1,2})\s*-\s*(\d{1,2})$/);
-      if (!m) return null;
-      return [Number(m[1]), Number(m[2])];
-    }
-
-    function isValidGameScore(a, b) {
-      if (!Number.isInteger(a) || !Number.isInteger(b)) return false;
-      if (a < 0 || b < 0 || a > 30 || b > 30) return false;
-      if (a === b) return false;
-
-      const max = Math.max(a, b);
-      const min = Math.min(a, b);
-      const diff = max - min;
-
-      if (max < 21) return false;
-      if (max === 30) return min === 29;
-      if (max >= 21 && max <= 29) {
-        if (min <= 19) return max === 21;
-        return diff === 2;
-      }
-      return false;
-    }
-
-    function bestOf3Winner(sets) {
-      let winA = 0,
-        winB = 0;
-      for (const s of sets) {
-        if (!s) continue;
-        if (s[0] > s[1]) winA++;
-        else winB++;
-      }
-      if (winA >= 2) return "A";
-      if (winB >= 2) return "B";
-      return null;
-    }
-
-    function sumPoints(sets) {
-      let a = 0,
-        b = 0;
-      for (const s of sets) {
-        if (!s) continue;
-        a += s[0];
-        b += s[1];
-      }
-      return [a, b];
-    }
-
-    function deriveWinnerFromSets(sets) {
-      return bestOf3Winner(sets);
-    }
-
-    // ---------- Round Robin ----------
-    function generateRoundRobin(list) {
-      const arr = [...list];
-      if (arr.length % 2 === 1) arr.push("BYE");
-
-      const N = arr.length;
-      const rounds = N - 1;
-      const half = N / 2;
-
-      let rotating = [...arr];
-      const out = [];
-
-      for (let r = 0; r < rounds; r++) {
-        const pairs = [];
-        for (let i = 0; i < half; i++) {
-          const a = rotating[i];
-          const b = rotating[N - 1 - i];
-          if (a !== "BYE" && b !== "BYE") pairs.push([a, b]);
+          countdownContainer.appendChild(createSegment(days.toString().padStart(2, "0"), "Ngày"));
+          countdownContainer.appendChild(createSegment(hours.toString().padStart(2, "0"), "Giờ"));
+          countdownContainer.appendChild(createSegment(minutes.toString().padStart(2, "0"), "Phút"));
+          countdownContainer.appendChild(createSegment(seconds.toString().padStart(2, "0"), "Giây"));
         }
-        out.push(pairs);
 
-        const fixed = rotating[0];
-        const rest = rotating.slice(1);
-        rest.unshift(rest.pop());
-        rotating = [fixed, ...rest];
+        renderCountdown();
+        setInterval(renderCountdown, 1000);
       }
-      return out;
-    }
 
-    // ---------- State ----------
-    function buildInitialMatches() {
-      const rr = generateRoundRobin(players);
-      const groupMatches = [];
-      let idCounter = 1;
-
-      rr.forEach((pairs, idx) => {
-        const roundNo = idx + 1;
-        pairs.forEach(([a, b]) => {
-          groupMatches.push({
-            id: `G${idCounter++}`,
-            stage: "GROUP",
-            round: roundNo,
-            a,
-            b,
-            sets: [null, null, null],
-            winner: null,
-            note: "",
+      // =========================
+      // UI: Smooth scroll, Fade-in, Demo counters
+      // =========================
+      function initSmoothScroll() {
+        document.querySelectorAll('a[href^="#"]').forEach((link) => {
+          link.addEventListener("click", (e) => {
+            const targetId = link.getAttribute("href");
+            const target = document.querySelector(targetId);
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
           });
         });
-      });
-
-      return {
-        matches: groupMatches,
-        playoff: { semis: [], final: [], third: [] },
-        groupLocked: false,
-        seedTop4: null,
-        lastSyncAt: null,
-      };
-    }
-
-    function loadState() {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return buildInitialMatches();
-      try {
-        const st = JSON.parse(raw);
-        if (!st.matches || !Array.isArray(st.matches)) return buildInitialMatches();
-        return st;
-      } catch {
-        return buildInitialMatches();
-      }
-    }
-
-    let state = loadState();
-
-    function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    }
-
-    // ---------- Standings ----------
-    function computeStandings() {
-      const table = new Map();
-      players.forEach((p) =>
-        table.set(p, { player: p, mp: 0, w: 0, l: 0, sw: 0, sl: 0, pf: 0, pa: 0 })
-      );
-
-      const groupMatches = state.matches.filter((m) => m.stage === "GROUP");
-
-      for (const m of groupMatches) {
-        if (!m.winner) continue;
-
-        const A = table.get(m.a);
-        const B = table.get(m.b);
-
-        let setWinA = 0,
-          setWinB = 0;
-        for (const s of m.sets) {
-          if (!s) continue;
-          if (s[0] > s[1]) setWinA++;
-          else setWinB++;
-        }
-
-        A.sw += setWinA;
-        A.sl += setWinB;
-        B.sw += setWinB;
-        B.sl += setWinA;
-
-        const [pa, pb] = sumPoints(m.sets);
-        A.pf += pa;
-        A.pa += pb;
-        B.pf += pb;
-        B.pa += pa;
-
-        if (m.winner === "A") {
-          A.w++;
-          B.l++;
-          A.mp += 2;
-        } else {
-          B.w++;
-          A.l++;
-          B.mp += 2;
-        }
       }
 
-      let rows = [...table.values()].map((r) => ({ ...r, sd: r.sw - r.sl, pd: r.pf - r.pa }));
+      function initFadeIn() {
+        const fadeEls = document.querySelectorAll(".fade-in");
+        if (!fadeEls.length) return;
 
-      function headToHeadWinner(p1, p2) {
-        const h2h = groupMatches.find(
-          (x) => (x.a === p1 && x.b === p2) || (x.a === p2 && x.b === p1)
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.18 }
         );
-        if (!h2h || !h2h.winner) return null;
-        if (h2h.a === p1 && h2h.winner === "A") return p1;
-        if (h2h.b === p1 && h2h.winner === "B") return p1;
-        return p2;
+
+        fadeEls.forEach((el) => observer.observe(el));
       }
 
-      rows.sort((x, y) => {
-        if (y.mp !== x.mp) return y.mp - x.mp;
+      function initDemoCounters() {
+        let countersStarted = false;
+        const counters = document.querySelectorAll(".counter");
+        if (!counters.length) return;
 
-        // nếu đúng 2 người cùng điểm: xét đối đầu
-        const tied = rows.filter((r) => r.mp === x.mp);
-        if (tied.length === 2) {
-          const w = headToHeadWinner(tied[0].player, tied[1].player);
-          if (w) return w === y.player ? 1 : -1;
+        function startCounters() {
+          if (countersStarted) return;
+          countersStarted = true;
+
+          counters.forEach((el) => {
+            const target = parseInt(el.dataset.count, 10) || 0;
+            let current = 0;
+            const steps = 60;
+            const increment = target / steps;
+
+            const interval = setInterval(() => {
+              current += increment;
+              if (current >= target) {
+                current = target;
+                clearInterval(interval);
+              }
+              el.textContent = Math.round(current);
+            }, 18);
+          });
         }
 
-        if (y.sd !== x.sd) return y.sd - x.sd;
-        if (y.pd !== x.pd) return y.pd - x.pd;
-        if (y.pf !== x.pf) return y.pf - x.pf;
-        return x.player.localeCompare(y.player);
-      });
+        const scoreSection = document.querySelector("#scoring");
+        if (!scoreSection) return;
 
-      return rows;
-    }
+        const scoreObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                startCounters();
+                scoreObserver.disconnect();
+              }
+            });
+          },
+          { threshold: 0.25 }
+        );
 
-    function groupCompleted() {
-      return state.matches.filter((m) => m.stage === "GROUP").every((m) => m.winner !== null);
-    }
-
-    // ---------- Playoff (reset đúng khi seed đổi) ----------
-    function resetIfChanged(match, newA, newB) {
-      const changed = match.a !== newA || match.b !== newB;
-      match.a = newA;
-      match.b = newB;
-      if (changed) {
-        match.sets = [null, null, null];
-        match.winner = null;
-        match.note = "";
-      }
-      return match;
-    }
-
-    function ensurePlayoffs() {
-      if (!groupCompleted()) return;
-
-      const standings = computeStandings();
-      const top4 =
-        state.groupLocked && Array.isArray(state.seedTop4)
-          ? state.seedTop4
-          : standings.slice(0, 4).map((r) => r.player);
-
-      const [s1, s2, s3, s4] = top4;
-
-      const existing =
-        state.playoff?.semis?.length ? state.playoff : { semis: [], final: [], third: [] };
-
-      const semis = [
-        existing.semis?.[0] ??
-          { id: "S1", stage: "SEMI", round: 1, a: s1, b: s4, sets: [null, null, null], winner: null, note: "" },
-        existing.semis?.[1] ??
-          { id: "S2", stage: "SEMI", round: 1, a: s2, b: s3, sets: [null, null, null], winner: null, note: "" },
-      ];
-
-      resetIfChanged(semis[0], s1, s4);
-      resetIfChanged(semis[1], s2, s3);
-
-      const final =
-        existing.final?.[0] ??
-        { id: "F1", stage: "FINAL", round: 1, a: "TBD", b: "TBD", sets: [null, null, null], winner: null, note: "" };
-
-      const third =
-        existing.third?.[0] ??
-        { id: "T1", stage: "THIRD", round: 1, a: "TBD", b: "TBD", sets: [null, null, null], winner: null, note: "" };
-
-      const semiWinners = semis.map((m) => (m.winner ? (m.winner === "A" ? m.a : m.b) : null));
-      const semiLosers = semis.map((m) => (m.winner ? (m.winner === "A" ? m.b : m.a) : null));
-
-      if (semiWinners.every(Boolean)) {
-        const newFA = semiWinners[0];
-        const newFB = semiWinners[1];
-        resetIfChanged(final, newFA, newFB);
-      } else {
-        resetIfChanged(final, "TBD", "TBD");
+        scoreObserver.observe(scoreSection);
       }
 
-      if (semiLosers.every(Boolean)) {
-        const newTA = semiLosers[0];
-        const newTB = semiLosers[1];
-        resetIfChanged(third, newTA, newTB);
-      } else {
-        resetIfChanged(third, "TBD", "TBD");
-      }
+      // =========================
+      // APP: LIVE SCOREBOARD
+      // =========================
+      function initApp() {
+        const STORAGE_KEY = "kuro_open_winter_2026_v4_api";
+        const ADMIN_PIN = "2005";
+        const ADMIN_KEY = "kuro_admin_unlocked";
 
-      state.playoff = { semis, final: [final], third: [third] };
-    }
+        // URL Web App Apps Script (/exec)
+        const SHEET_API_URL =
+          "https://script.google.com/macros/s/AKfycbwS-1CJFE4gPuxKDSK7yxYYOPQ_l1qDeXaFSaeI1JV0CbYkffHRBYXv3urSTkUu5CjA/exec";
 
-    // ---------- Render helpers ----------
-    function stageLabel(stage) {
-      if (stage === "GROUP") return "Vòng bảng";
-      if (stage === "SEMI") return "Bán kết";
-      if (stage === "FINAL") return "Chung kết";
-      if (stage === "THIRD") return "Hạng 3";
-      return stage;
-    }
+        const players = ["AnKuro", "ĐứcKuro", "KiênKuro", "HoánKuro", "QuangKuro"];
+        const $ = (id) => document.getElementById(id);
 
-    function formatSets(sets, idx) {
-      const s = sets[idx];
-      return s ? `${s[0]}-${s[1]}` : "-";
-    }
-
-    function winnerName(m) {
-      if (!m.winner) return "";
-      return m.winner === "A" ? m.a : m.b;
-    }
-
-    function listAllMatches() {
-      return [
-        ...state.matches,
-        ...(state.playoff?.semis ?? []),
-        ...(state.playoff?.final ?? []),
-        ...(state.playoff?.third ?? []),
-      ];
-    }
-
-    function findMatchById(id) {
-      return listAllMatches().find((m) => m.id === id) || null;
-    }
-
-    function updateMatchById(id, patch) {
-      const gi = state.matches.findIndex((m) => m.id === id);
-      if (gi >= 0) {
-        state.matches[gi] = { ...state.matches[gi], ...patch };
-        return;
-      }
-      for (const key of ["semis", "final", "third"]) {
-        const arr = state.playoff?.[key];
-        const idx = arr?.findIndex((m) => m.id === id) ?? -1;
-        if (idx >= 0) {
-          state.playoff[key][idx] = { ...state.playoff[key][idx], ...patch };
-          return;
+        // ---------- Admin ----------
+        function isAdmin() {
+          return sessionStorage.getItem(ADMIN_KEY) === "1";
         }
-      }
-    }
+        function setAdmin(on) {
+          sessionStorage.setItem(ADMIN_KEY, on ? "1" : "0");
+          renderAll();
+        }
 
-    function nextMatchId(allMatches) {
-      return allMatches.find((m) => !m.winner && m.a !== "TBD" && m.b !== "TBD")?.id ?? null;
-    }
+        // ---------- Helpers ----------
+        function parseSet(str) {
+          if (!str || !String(str).trim()) return null;
+          const m = String(str).trim().match(/^(\d{1,2})\s*-\s*(\d{1,2})$/);
+          if (!m) return null;
+          return [Number(m[1]), Number(m[2])];
+        }
 
-    // ---------- Filter ----------
-    function setupFilter() {
-      const sel = $("player-filter");
-      if (!sel) return;
-      sel.innerHTML =
-        `<option value="ALL">Tất cả VĐV</option>` +
-        players.map((p) => `<option value="${p}">${p}</option>`).join("");
-      sel.addEventListener("change", () => renderAll());
-    }
+        function isValidGameScore(a, b) {
+          if (!Number.isInteger(a) || !Number.isInteger(b)) return false;
+          if (a < 0 || b < 0 || a > 30 || b > 30) return false;
+          if (a === b) return false;
 
-    function passFilter(match) {
-      const f = $("player-filter")?.value ?? "ALL";
-      if (f === "ALL") return true;
-      return match.a === f || match.b === f;
-    }
+          const max = Math.max(a, b);
+          const min = Math.min(a, b);
+          const diff = max - min;
 
-    // ---------- Google Sheet API ----------
-    async function apiFetchJson(url, options) {
-      const res = await fetch(url, options);
-      const text = await res.text();
-
-      let json;
-      try {
-        json = JSON.parse(text);
-      } catch {
-        // Apps Script hay trả HTML khi deploy sai/đòi login
-        throw new Error("API không trả JSON (có thể deploy chưa để Anyone hoặc script lỗi).");
-      }
-
-      if (!res.ok || !json || json.ok === false) {
-        throw new Error(json?.error || `HTTP ${res.status}`);
-      }
-
-      return json;
-    }
-
-    async function apiGetAllRows() {
-      const url = `${SHEET_API_URL}?action=list&t=${Date.now()}`;
-      const json = await apiFetchJson(url, { cache: "no-store" });
-      return json.rows || [];
-    }
-
-    async function apiUpsertMatch(match) {
-      const payload = {
-        id: match.id,
-        stage: match.stage,
-        a: match.a,
-        b: match.b,
-        set1: match.sets?.[0] ? `${match.sets[0][0]}-${match.sets[0][1]}` : "",
-        set2: match.sets?.[1] ? `${match.sets[1][0]}-${match.sets[1][1]}` : "",
-        set3: match.sets?.[2] ? `${match.sets[2][0]}-${match.sets[2][1]}` : "",
-        winner: match.winner ? (match.winner === "A" ? match.a : match.b) : "",
-        note: match.note || "",
-      };
-
-      await apiFetchJson(SHEET_API_URL, {
-        method: "POST",
-        body: JSON.stringify(payload), // không set headers để tránh preflight
-      });
-    }
-
-    // sync anti-overlap
-    let syncInFlight = false;
-
-    async function syncFromSheetApi({ silent = false } = {}) {
-      if (syncInFlight) return 0;
-      syncInFlight = true;
-
-      try {
-        const rows = await apiGetAllRows();
-
-        const all = listAllMatches();
-        const map = new Map(all.map((m) => [m.id, m]));
-        let updated = 0;
-
-        for (const r of rows) {
-          const id = String(r.id || "").trim();
-          if (!id || !map.has(id)) continue;
-
-          const m = map.get(id);
-
-          const stage = String(r.stage || m.stage);
-          const a = String(r.a || m.a);
-          const b = String(r.b || m.b);
-
-          const s1 = parseSet(r.set1);
-          const s2 = parseSet(r.set2);
-          const s3 = parseSet(r.set3);
-          const sets = [s1, s2, s3];
-
-          // winner: ưu tiên cột winner (tên/A/B), nếu trống thì suy ra từ set
-          let winner = null;
-          const wRaw = String(r.winner || "").trim();
-          if (wRaw) {
-            if (wRaw === "A" || wRaw === "B") winner = wRaw;
-            else if (wRaw === a) winner = "A";
-            else if (wRaw === b) winner = "B";
+          if (max < 21) return false;
+          if (max === 30) return min === 29;
+          if (max >= 21 && max <= 29) {
+            if (min <= 19) return max === 21;
+            return diff === 2;
           }
-          if (!winner) winner = deriveWinnerFromSets(sets);
-
-          const note = String(r.note || "");
-
-          updateMatchById(id, { stage, a, b, sets, winner, note });
-          updated++;
+          return false;
         }
 
-        state.lastSyncAt = Date.now();
-        ensurePlayoffs();
-        saveState();
-        renderAll();
+        function bestOf3Winner(sets) {
+          let winA = 0,
+            winB = 0;
+          for (const s of sets) {
+            if (!s) continue;
+            if (s[0] > s[1]) winA++;
+            else winB++;
+          }
+          if (winA >= 2) return "A";
+          if (winB >= 2) return "B";
+          return null;
+        }
 
-        if (!silent) alert(`Sync OK: cập nhật ${updated} dòng.`);
-        return updated;
-      } catch (e) {
-        if (!silent) alert(e?.message || "Sync thất bại.");
-        return 0;
-      } finally {
-        syncInFlight = false;
-      }
-    }
+        function sumPoints(sets) {
+          let a = 0,
+            b = 0;
+          for (const s of sets) {
+            if (!s) continue;
+            a += s[0];
+            b += s[1];
+          }
+          return [a, b];
+        }
 
-    // ---------- Render Scoreboard ----------
-    function renderScoreboard() {
-      const tbody = $("score-data");
-      if (!tbody) return;
+        function deriveWinnerFromSets(sets) {
+          return bestOf3Winner(sets);
+        }
 
-      const all = listAllMatches().filter(passFilter);
-      const nextId = nextMatchId(all);
+        // ---------- Round Robin ----------
+        function generateRoundRobin(list) {
+          const arr = [...list];
+          if (arr.length % 2 === 1) arr.push("BYE");
 
-      tbody.innerHTML = all
-        .map((m) => {
-          const isNext = m.id === nextId;
-          const rowStyle = isNext ? `style="outline:2px solid rgba(255,255,255,.22);"` : "";
+          const N = arr.length;
+          const rounds = N - 1;
+          const half = N / 2;
 
-          const isTBD = m.a === "TBD" || m.b === "TBD";
-          const isLockedGroup = state.groupLocked && m.stage === "GROUP";
-          const canEdit = isAdmin() && !isTBD && !isLockedGroup;
+          let rotating = [...arr];
+          const out = [];
 
-          const noteText = m.note || (isNext ? "Trận kế tiếp" : "-");
-          const win = winnerName(m);
+          for (let r = 0; r < rounds; r++) {
+            const pairs = [];
+            for (let i = 0; i < half; i++) {
+              const a = rotating[i];
+              const b = rotating[N - 1 - i];
+              if (a !== "BYE" && b !== "BYE") pairs.push([a, b]);
+            }
+            out.push(pairs);
 
-          return `
+            const fixed = rotating[0];
+            const rest = rotating.slice(1);
+            rest.unshift(rest.pop());
+            rotating = [fixed, ...rest];
+          }
+          return out;
+        }
+
+        // ---------- State ----------
+        function buildInitialMatches() {
+          const rr = generateRoundRobin(players);
+          const groupMatches = [];
+          let idCounter = 1;
+
+          rr.forEach((pairs, idx) => {
+            const roundNo = idx + 1;
+            pairs.forEach(([a, b]) => {
+              groupMatches.push({
+                id: `G${idCounter++}`,
+                stage: "GROUP",
+                round: roundNo,
+                a,
+                b,
+                sets: [null, null, null],
+                winner: null,
+                note: "",
+              });
+            });
+          });
+
+          return {
+            matches: groupMatches,
+            playoff: { semis: [], final: [], third: [] },
+            groupLocked: false,
+            seedTop4: null,
+            lastSyncAt: null,
+          };
+        }
+
+        function loadState() {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return buildInitialMatches();
+          try {
+            const st = JSON.parse(raw);
+            if (!st.matches || !Array.isArray(st.matches)) return buildInitialMatches();
+            return st;
+          } catch {
+            return buildInitialMatches();
+          }
+        }
+
+        let state = loadState();
+
+        function saveState() {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        // ---------- Standings ----------
+        function computeStandings() {
+          const table = new Map();
+          players.forEach((p) =>
+            table.set(p, { player: p, mp: 0, w: 0, l: 0, sw: 0, sl: 0, pf: 0, pa: 0 })
+          );
+
+          const groupMatches = state.matches.filter((m) => m.stage === "GROUP");
+
+          for (const m of groupMatches) {
+            if (!m.winner) continue;
+
+            const A = table.get(m.a);
+            const B = table.get(m.b);
+
+            let setWinA = 0,
+              setWinB = 0;
+            for (const s of m.sets) {
+              if (!s) continue;
+              if (s[0] > s[1]) setWinA++;
+              else setWinB++;
+            }
+
+            A.sw += setWinA;
+            A.sl += setWinB;
+            B.sw += setWinB;
+            B.sl += setWinA;
+
+            const [pa, pb] = sumPoints(m.sets);
+            A.pf += pa;
+            A.pa += pb;
+            B.pf += pb;
+            B.pa += pa;
+
+            if (m.winner === "A") {
+              A.w++;
+              B.l++;
+              A.mp += 2;
+            } else {
+              B.w++;
+              A.l++;
+              B.mp += 2;
+            }
+          }
+
+          let rows = [...table.values()].map((r) => ({ ...r, sd: r.sw - r.sl, pd: r.pf - r.pa }));
+
+          function headToHeadWinner(p1, p2) {
+            const h2h = groupMatches.find(
+              (x) => (x.a === p1 && x.b === p2) || (x.a === p2 && x.b === p1)
+            );
+            if (!h2h || !h2h.winner) return null;
+            if (h2h.a === p1 && h2h.winner === "A") return p1;
+            if (h2h.b === p1 && h2h.winner === "B") return p1;
+            return p2;
+          }
+
+          rows.sort((x, y) => {
+            if (y.mp !== x.mp) return y.mp - x.mp;
+
+            // nếu đúng 2 người cùng điểm: xét đối đầu
+            const tied = rows.filter((r) => r.mp === x.mp);
+            if (tied.length === 2) {
+              const w = headToHeadWinner(tied[0].player, tied[1].player);
+              if (w) return w === y.player ? 1 : -1;
+            }
+
+            if (y.sd !== x.sd) return y.sd - x.sd;
+            if (y.pd !== x.pd) return y.pd - x.pd;
+            if (y.pf !== x.pf) return y.pf - x.pf;
+            return x.player.localeCompare(y.player);
+          });
+
+          return rows;
+        }
+
+        function groupCompleted() {
+          return state.matches.filter((m) => m.stage === "GROUP").every((m) => m.winner !== null);
+        }
+
+        // ---------- Playoff (reset đúng khi seed đổi) ----------
+        function resetIfChanged(match, newA, newB) {
+          const changed = match.a !== newA || match.b !== newB;
+          match.a = newA;
+          match.b = newB;
+          if (changed) {
+            match.sets = [null, null, null];
+            match.winner = null;
+            match.note = "";
+          }
+          return match;
+        }
+
+        function ensurePlayoffs() {
+          if (!groupCompleted()) return;
+
+          const standings = computeStandings();
+          const top4 =
+            state.groupLocked && Array.isArray(state.seedTop4)
+              ? state.seedTop4
+              : standings.slice(0, 4).map((r) => r.player);
+
+          const [s1, s2, s3, s4] = top4;
+
+          const existing =
+            state.playoff?.semis?.length ? state.playoff : { semis: [], final: [], third: [] };
+
+          const semis = [
+            existing.semis?.[0] ??
+            { id: "S1", stage: "SEMI", round: 1, a: s1, b: s4, sets: [null, null, null], winner: null, note: "" },
+            existing.semis?.[1] ??
+            { id: "S2", stage: "SEMI", round: 1, a: s2, b: s3, sets: [null, null, null], winner: null, note: "" },
+          ];
+
+          resetIfChanged(semis[0], s1, s4);
+          resetIfChanged(semis[1], s2, s3);
+
+          const final =
+            existing.final?.[0] ??
+            { id: "F1", stage: "FINAL", round: 1, a: "TBD", b: "TBD", sets: [null, null, null], winner: null, note: "" };
+
+          const third =
+            existing.third?.[0] ??
+            { id: "T1", stage: "THIRD", round: 1, a: "TBD", b: "TBD", sets: [null, null, null], winner: null, note: "" };
+
+          const semiWinners = semis.map((m) => (m.winner ? (m.winner === "A" ? m.a : m.b) : null));
+          const semiLosers = semis.map((m) => (m.winner ? (m.winner === "A" ? m.b : m.a) : null));
+
+          if (semiWinners.every(Boolean)) {
+            const newFA = semiWinners[0];
+            const newFB = semiWinners[1];
+            resetIfChanged(final, newFA, newFB);
+          } else {
+            resetIfChanged(final, "TBD", "TBD");
+          }
+
+          if (semiLosers.every(Boolean)) {
+            const newTA = semiLosers[0];
+            const newTB = semiLosers[1];
+            resetIfChanged(third, newTA, newTB);
+          } else {
+            resetIfChanged(third, "TBD", "TBD");
+          }
+
+          state.playoff = { semis, final: [final], third: [third] };
+        }
+
+        // ---------- Render helpers ----------
+        function stageLabel(stage) {
+          if (stage === "GROUP") return "Vòng bảng";
+          if (stage === "SEMI") return "Bán kết";
+          if (stage === "FINAL") return "Chung kết";
+          if (stage === "THIRD") return "Hạng 3";
+          return stage;
+        }
+
+        function formatSets(sets, idx) {
+          const s = sets[idx];
+          return s ? `${s[0]}-${s[1]}` : "-";
+        }
+
+        function winnerName(m) {
+          if (!m.winner) return "";
+          return m.winner === "A" ? m.a : m.b;
+        }
+
+        function listAllMatches() {
+          return [
+            ...state.matches,
+            ...(state.playoff?.semis ?? []),
+            ...(state.playoff?.final ?? []),
+            ...(state.playoff?.third ?? []),
+          ];
+        }
+
+        function findMatchById(id) {
+          return listAllMatches().find((m) => m.id === id) || null;
+        }
+
+        function updateMatchById(id, patch) {
+          const gi = state.matches.findIndex((m) => m.id === id);
+          if (gi >= 0) {
+            state.matches[gi] = { ...state.matches[gi], ...patch };
+            return;
+          }
+          for (const key of ["semis", "final", "third"]) {
+            const arr = state.playoff?.[key];
+            const idx = arr?.findIndex((m) => m.id === id) ?? -1;
+            if (idx >= 0) {
+              state.playoff[key][idx] = { ...state.playoff[key][idx], ...patch };
+              return;
+            }
+          }
+        }
+
+        function nextMatchId(allMatches) {
+          return allMatches.find((m) => !m.winner && m.a !== "TBD" && m.b !== "TBD")?.id ?? null;
+        }
+
+        // ---------- Filter ----------
+        function setupFilter() {
+          const sel = $("player-filter");
+          if (!sel) return;
+          sel.innerHTML =
+            `<option value="ALL">Tất cả VĐV</option>` +
+            players.map((p) => `<option value="${p}">${p}</option>`).join("");
+          sel.addEventListener("change", () => renderAll());
+        }
+
+        function passFilter(match) {
+          const f = $("player-filter")?.value ?? "ALL";
+          if (f === "ALL") return true;
+          return match.a === f || match.b === f;
+        }
+
+        // ---------- Google Sheet API ----------
+        async function apiFetchJson(url, options) {
+          const res = await fetch(url, options);
+          const text = await res.text();
+
+          let json;
+          try {
+            json = JSON.parse(text);
+          } catch {
+            // Apps Script hay trả HTML khi deploy sai/đòi login
+            throw new Error("API không trả JSON (có thể deploy chưa để Anyone hoặc script lỗi).");
+          }
+
+          if (!res.ok || !json || json.ok === false) {
+            throw new Error(json?.error || `HTTP ${res.status}`);
+          }
+
+          return json;
+        }
+
+        async function apiGetAllRows() {
+          const url = `${SHEET_API_URL}?action=list&t=${Date.now()}`;
+          const json = await apiFetchJson(url, { cache: "no-store" });
+          return json.rows || [];
+        }
+
+        async function apiUpsertMatch(match) {
+          const payload = {
+            id: match.id,
+            stage: match.stage,
+            a: match.a,
+            b: match.b,
+            set1: match.sets?.[0] ? `${match.sets[0][0]}-${match.sets[0][1]}` : "",
+            set2: match.sets?.[1] ? `${match.sets[1][0]}-${match.sets[1][1]}` : "",
+            set3: match.sets?.[2] ? `${match.sets[2][0]}-${match.sets[2][1]}` : "",
+            winner: match.winner ? (match.winner === "A" ? match.a : match.b) : "",
+            note: match.note || "",
+          };
+
+          await apiFetchJson(SHEET_API_URL, {
+            method: "POST",
+            body: JSON.stringify(payload), // không set headers để tránh preflight
+          });
+        }
+
+        // sync anti-overlap
+        let syncInFlight = false;
+
+        async function syncFromSheetApi({ silent = false } = {}) {
+          if (syncInFlight) return 0;
+          syncInFlight = true;
+
+          try {
+            const rows = await apiGetAllRows();
+
+            const all = listAllMatches();
+            const map = new Map(all.map((m) => [m.id, m]));
+            let updated = 0;
+
+            for (const r of rows) {
+              const id = String(r.id || "").trim();
+              if (!id || !map.has(id)) continue;
+
+              const m = map.get(id);
+
+              const stage = String(r.stage || m.stage);
+              const a = String(r.a || m.a);
+              const b = String(r.b || m.b);
+
+              const s1 = parseSet(r.set1);
+              const s2 = parseSet(r.set2);
+              const s3 = parseSet(r.set3);
+              const sets = [s1, s2, s3];
+
+              // winner: ưu tiên cột winner (tên/A/B), nếu trống thì suy ra từ set
+              let winner = null;
+              const wRaw = String(r.winner || "").trim();
+              if (wRaw) {
+                if (wRaw === "A" || wRaw === "B") winner = wRaw;
+                else if (wRaw === a) winner = "A";
+                else if (wRaw === b) winner = "B";
+              }
+              if (!winner) winner = deriveWinnerFromSets(sets);
+
+              const note = String(r.note || "");
+
+              updateMatchById(id, { stage, a, b, sets, winner, note });
+              updated++;
+            }
+
+            state.lastSyncAt = Date.now();
+            ensurePlayoffs();
+            saveState();
+            renderAll();
+
+            if (!silent) alert(`Sync OK: cập nhật ${updated} dòng.`);
+            return updated;
+          } catch (e) {
+            if (!silent) alert(e?.message || "Sync thất bại.");
+            return 0;
+          } finally {
+            syncInFlight = false;
+          }
+        }
+
+        // ---------- Render Scoreboard ----------
+        function renderScoreboard() {
+          const tbody = $("score-data");
+          if (!tbody) return;
+
+          const all = listAllMatches().filter(passFilter);
+          const nextId = nextMatchId(all);
+
+          tbody.innerHTML = all
+            .map((m) => {
+              const isNext = m.id === nextId;
+              const rowStyle = isNext ? `style="outline:2px solid rgba(255,255,255,.22);"` : "";
+
+              const isTBD = m.a === "TBD" || m.b === "TBD";
+              const isLockedGroup = state.groupLocked && m.stage === "GROUP";
+              const canEdit = isAdmin() && !isTBD && !isLockedGroup;
+
+              const noteText = m.note || (isNext ? "Trận kế tiếp" : "-");
+              const win = winnerName(m);
+
+              return `
             <tr ${rowStyle}>
               <td data-label="Giai đoạn">${stageLabel(m.stage)}</td>
               <td data-label="Vòng">${m.stage === "GROUP" ? `Vòng ${m.round}` : "-"}</td>
@@ -1989,79 +2086,80 @@
               <td data-label="Set 3"><strong>${formatSets(m.sets, 2)}</strong></td>
               <td data-label="Người thắng">${win ? `<span class="winner-label">${win}</span>` : "-"}</td>
               <td data-label="Ghi chú">${noteText}</td>
-              <td data-label="Thao tác" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+              <td data-label="Thao tác" class="actions-cell">
                 <button type="button" class="btn ghost" data-edit="${m.id}" ${canEdit ? "" : "disabled"}>Nhập</button>
                 <button type="button" class="btn ghost" data-clear="${m.id}" ${canEdit ? "" : "disabled"}>Xoá</button>
               </td>
             </tr>
           `;
-        })
-        .join("");
+            })
+            .join("");
 
-      if (!tbody.innerHTML.trim()) {
-        tbody.innerHTML = `<tr><td colspan="9">Không có trận nào theo bộ lọc hiện tại.</td></tr>`;
-      }
-    }
-    // ======= TOP 1 HONOR BOARD =======
+          if (!tbody.innerHTML.trim()) {
+            tbody.innerHTML = `<tr><td colspan="9">Không có trận nào theo bộ lọc hiện tại.</td></tr>`;
+          }
+        }
+        // ======= TOP 1 HONOR BOARD =======
 
-// Map tên -> ảnh (URL công khai)
-const PLAYER_AVATARS = {
-  "AnKuro":   "/img/z7238788029070_fbe3bf347e7e5570e3deb86f3b43c6df.jpg",
-  "ĐứcKuro":  "/img/z7238788029590_18135496fc86f324c7b9b2d03f87463f.jpg",
-  "KiênKuro": "/img/z7238788308541_6354bc98eb00357f875164b179409902.jpg",
-  "HoánKuro": "/img/z7238788028411_90e318ef2c22b07d5e6b842fadaec364.jpg",
-  "QuangKuro":"/img/z7238788028452_047008e38afb300c7ed524fb352bc698.jpg",
-};
+        // Map tên -> ảnh (URL công khai)
+        const PLAYER_AVATARS = {
+          "AnKuro": "./img/z7238788029070_fbe3bf347e7e5570e3deb86f3b43c6df.jpg",
+          "ĐứcKuro": "./img/z7238788029590_18135496fc86f324c7b9b2d03f87463f.jpg",
+          "KiênKuro": "./img/z7238788308541_6354bc98eb00357f875164b179409902.jpg",
+          "HoánKuro": "./img/z7238788028411_90e318ef2c22b07d5e6b842fadaec364.jpg",
+          "QuangKuro": "./img/z7238788028452_047008e38afb300c7ed524fb352bc698.jpg",
+        };
 
-// Ảnh mặc định nếu thiếu
-const DEFAULT_AVATAR =
-  "https://via.placeholder.com/256?text=KURO";
 
-function safeAvatarUrl(name) {
-  return PLAYER_AVATARS[name] || DEFAULT_AVATAR;
-}
+        // Ảnh mặc định nếu thiếu
+        const DEFAULT_AVATAR =
+          "https://via.placeholder.com/256?text=KURO";
 
-function renderTop1Honor() {
-  const img = document.getElementById("top1-avatar");
-  const nameEl = document.getElementById("top1-name");
-  const metaEl = document.getElementById("top1-meta");
-  const updEl = document.getElementById("top1-updated");
-  if (!img || !nameEl || !metaEl || !updEl) return;
+        function safeAvatarUrl(name) {
+          return PLAYER_AVATARS[name] || DEFAULT_AVATAR;
+        }
 
-  const rows = computeStandings();
-  if (!rows || !rows.length) {
-    nameEl.textContent = "-";
-    metaEl.textContent = "-";
-    updEl.textContent = "-";
-    img.src = DEFAULT_AVATAR;
-    return;
-  }
+        function renderTop1Honor() {
+          const img = document.getElementById("top1-avatar");
+          const nameEl = document.getElementById("top1-name");
+          const metaEl = document.getElementById("top1-meta");
+          const updEl = document.getElementById("top1-updated");
+          if (!img || !nameEl || !metaEl || !updEl) return;
 
-  const top = rows[0]; // top 1 theo logic standings hiện tại
-  nameEl.textContent = top.player;
+          const rows = computeStandings();
+          if (!rows || !rows.length) {
+            nameEl.textContent = "-";
+            metaEl.textContent = "-";
+            updEl.textContent = "-";
+            img.src = DEFAULT_AVATAR;
+            return;
+          }
 
-  // Meta: bạn có thể đổi nội dung tuỳ thích
-  metaEl.textContent =
-    `Điểm: ${top.mp} • Thắng/Thua: ${top.w}/${top.l} • Hiệu số set: ${top.sd} • Hiệu số điểm: ${top.pd}`;
+          const top = rows[0]; // top 1 theo logic standings hiện tại
+          nameEl.textContent = top.player;
 
-  // thời điểm cập nhật
-  const ts = state?.lastSyncAt ? new Date(state.lastSyncAt).toLocaleString("vi-VN") : "-";
-  updEl.textContent = `Cập nhật: ${ts}`;
+          // Meta: bạn có thể đổi nội dung tuỳ thích
+          metaEl.textContent =
+            `Điểm: ${top.mp} • Thắng/Thua: ${top.w}/${top.l} • Hiệu số set: ${top.sd} • Hiệu số điểm: ${top.pd}`;
 
-  const url = safeAvatarUrl(top.player);
-  img.src = url;
-  img.onerror = () => { img.src = DEFAULT_AVATAR; };
-}
+          // thời điểm cập nhật
+          const ts = state?.lastSyncAt ? new Date(state.lastSyncAt).toLocaleString("vi-VN") : "-";
+          updEl.textContent = `Cập nhật: ${ts}`;
 
-    // ---------- Render Standings ----------
-    function renderStandings() {
-      const body = $("standings-body");
-      if (!body) return;
+          const url = safeAvatarUrl(top.player);
+          img.src = url;
+          img.onerror = () => { img.src = DEFAULT_AVATAR; };
+        }
 
-      const rows = computeStandings();
-      body.innerHTML = rows
-        .map(
-          (r, i) => `
+        // ---------- Render Standings ----------
+        function renderStandings() {
+          const body = $("standings-body");
+          if (!body) return;
+
+          const rows = computeStandings();
+          body.innerHTML = rows
+            .map(
+              (r, i) => `
           <tr>
             <td>${i + 1}</td>
             <td><strong>${r.player}</strong></td>
@@ -2076,26 +2174,26 @@ function renderTop1Honor() {
             <td class="${r.pd > 0 ? "score-highlight" : ""}">${r.pd}</td>
           </tr>
         `
-        )
-        .join("");
-    }
+            )
+            .join("");
+        }
 
-    // ---------- Render Bracket ----------
-    function renderBracket() {
-      ensurePlayoffs();
+        // ---------- Render Bracket ----------
+        function renderBracket() {
+          ensurePlayoffs();
 
-      const semisWrap = $("semis-wrap");
-      const finalWrap = $("final-wrap");
-      const thirdWrap = $("third-wrap");
-      if (!semisWrap || !finalWrap || !thirdWrap) return;
+          const semisWrap = $("semis-wrap");
+          const finalWrap = $("final-wrap");
+          const thirdWrap = $("third-wrap");
+          if (!semisWrap || !finalWrap || !thirdWrap) return;
 
-      function matchCard(m) {
-        const setsText = m.sets.map((s) => (s ? `${s[0]}-${s[1]}` : "-")).join(" | ");
-        const win = winnerName(m);
-        const isTBD = m.a === "TBD" || m.b === "TBD";
-        const canEdit = isAdmin() && !isTBD;
+          function matchCard(m) {
+            const setsText = m.sets.map((s) => (s ? `${s[0]}-${s[1]}` : "-")).join(" | ");
+            const win = winnerName(m);
+            const isTBD = m.a === "TBD" || m.b === "TBD";
+            const canEdit = isAdmin() && !isTBD;
 
-        return `
+            return `
           <div class="glass-card" style="margin-bottom:10px; padding:12px;">
             <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap;">
               <div>
@@ -2115,535 +2213,535 @@ function renderTop1Honor() {
             </div>
           </div>
         `;
-      }
+          }
 
-      const semis = state.playoff?.semis ?? [];
-      const final = state.playoff?.final ?? [];
-      const third = state.playoff?.third ?? [];
+          const semis = state.playoff?.semis ?? [];
+          const final = state.playoff?.final ?? [];
+          const third = state.playoff?.third ?? [];
 
-      semisWrap.innerHTML = semis.length ? semis.map(matchCard).join("") : `<div style="opacity:.85;">Chưa có dữ liệu bán kết.</div>`;
-      finalWrap.innerHTML = final.length ? final.map(matchCard).join("") : `<div style="opacity:.85;">Chưa có dữ liệu chung kết.</div>`;
-      thirdWrap.innerHTML = third.length ? third.map(matchCard).join("") : `<div style="opacity:.85;">Chưa có dữ liệu hạng 3.</div>`;
-    }
+          semisWrap.innerHTML = semis.length ? semis.map(matchCard).join("") : `<div style="opacity:.85;">Chưa có dữ liệu bán kết.</div>`;
+          finalWrap.innerHTML = final.length ? final.map(matchCard).join("") : `<div style="opacity:.85;">Chưa có dữ liệu chung kết.</div>`;
+          thirdWrap.innerHTML = third.length ? third.map(matchCard).join("") : `<div style="opacity:.85;">Chưa có dữ liệu hạng 3.</div>`;
+        }
 
-    // ---------- Status / Admin UI ----------
-    function fmtTime(ts) {
-      if (!ts) return "-";
-      try {
-        return new Date(ts).toLocaleString("vi-VN");
-      } catch {
-        return "-";
-      }
-    }
+        // ---------- Status / Admin UI ----------
+        function fmtTime(ts) {
+          if (!ts) return "-";
+          try {
+            return new Date(ts).toLocaleString("vi-VN");
+          } catch {
+            return "-";
+          }
+        }
 
-    function updateStatusPill() {
-      const el = $("status-pill");
-      if (!el) return;
+        function updateStatusPill() {
+          const el = $("status-pill");
+          if (!el) return;
 
-      const adminTxt = isAdmin() ? "Admin: Mở" : "Admin: Khoá";
-      const lockTxt = state.groupLocked ? "Chốt vòng bảng: Bật" : "Chốt vòng bảng: Tắt";
-      const syncTxt = state.lastSyncAt ? `Sync: ${fmtTime(state.lastSyncAt)}` : "Sync: -";
+          const adminTxt = isAdmin() ? "Admin: Mở" : "Admin: Khoá";
+          const lockTxt = state.groupLocked ? "Chốt vòng bảng: Bật" : "Chốt vòng bảng: Tắt";
+          const syncTxt = state.lastSyncAt ? `Sync: ${fmtTime(state.lastSyncAt)}` : "Sync: -";
 
-      el.innerHTML = `
+          el.innerHTML = `
         <span>${adminTxt}</span>
         <span style="opacity:.6;">•</span>
         <span>${lockTxt}</span>
         <span style="opacity:.6;">•</span>
         <span>${syncTxt}</span>
       `;
-    }
-
-    function updateAdminUI() {
-      const btnAdmin = $("btn-admin");
-      const btnLock = $("btn-lock");
-      const btnReset = $("btn-reset");
-      const btnExport = $("btn-export");
-      const btnSync = $("btn-sync");
-
-      const canAdmin = isAdmin();
-
-      if (btnAdmin) btnAdmin.textContent = canAdmin ? "Admin: Mở" : "Admin: Khoá";
-      if (btnLock) btnLock.textContent = `Chốt vòng bảng: ${state.groupLocked ? "Bật" : "Tắt"}`;
-
-      [btnLock, btnReset, btnExport, btnSync].forEach((b) => {
-        if (!b) return;
-        b.disabled = !canAdmin;
-        b.style.opacity = canAdmin ? "" : "0.55";
-      });
-
-      updateStatusPill();
-    }
-
-    // ---------- Modal: Input score ----------
-    const dlg = $("score-dialog");
-    const dlgTitle = $("dlg-title");
-    const dlgSub = $("dlg-sub");
-    const dlgErr = $("dlg-error");
-    const inS1 = $("s1");
-    const inS2 = $("s2");
-    const inS3 = $("s3");
-    const inNote = $("note");
-    const selType = $("result-type");
-    const selForced = $("forced-winner");
-    const btnClearDlg = $("dlg-clear");
-    const btnSaveDlg = $("dlg-save");
-
-    let currentMatchId = null;
-
-    function showDlgError(msg) {
-      if (!dlgErr) return;
-      dlgErr.style.display = msg ? "block" : "none";
-      dlgErr.textContent = msg || "";
-    }
-
-    function openScoreDialog(matchId) {
-      const m = findMatchById(matchId);
-      if (!m) return;
-
-      if (!isAdmin()) return;
-      if (state.groupLocked && m.stage === "GROUP") return;
-      if (m.a === "TBD" || m.b === "TBD") return;
-
-      currentMatchId = matchId;
-
-      if (dlgTitle) dlgTitle.textContent = `Nhập tỉ số • ${m.id}`;
-      if (dlgSub) dlgSub.textContent = `${stageLabel(m.stage)} • ${m.a} vs ${m.b}`;
-
-      inS1.value = m.sets?.[0] ? `${m.sets[0][0]}-${m.sets[0][1]}` : "";
-      inS2.value = m.sets?.[1] ? `${m.sets[1][0]}-${m.sets[1][1]}` : "";
-      inS3.value = m.sets?.[2] ? `${m.sets[2][0]}-${m.sets[2][1]}` : "";
-
-      inNote.value = m.note || "";
-      selType.value = "NORMAL";
-      selForced.value = "A";
-      showDlgError("");
-
-      if (dlg && typeof dlg.showModal === "function") dlg.showModal();
-    }
-
-    async function clearMatch(matchId) {
-      const m = findMatchById(matchId);
-      if (!m) return;
-      if (!isAdmin()) return;
-      if (state.groupLocked && m.stage === "GROUP") return;
-      if (m.a === "TBD" || m.b === "TBD") return;
-
-      updateMatchById(matchId, { sets: [null, null, null], winner: null, note: "" });
-      ensurePlayoffs();
-      saveState();
-      renderAll();
-
-      // Push lên Sheet
-      const updatedMatch = findMatchById(matchId);
-      await apiUpsertMatch(updatedMatch);
-    }
-
-    function applyResultToMatch(m, sets, resultType, forcedWinner, note) {
-      let winner = null;
-
-      if (resultType === "NORMAL") {
-        winner = bestOf3Winner(sets);
-        if (!winner) throw new Error("Chưa xác định được người thắng. Hãy nhập đủ set hợp lệ (Bo3).");
-      } else {
-        winner = forcedWinner === "B" ? "B" : "A";
-        const hasAnySet = sets.some((s) => s && s[0] !== undefined);
-        if (!hasAnySet) {
-          sets = winner === "A" ? [[21, 0], [21, 0], null] : [[0, 21], [0, 21], null];
         }
-      }
 
-      updateMatchById(m.id, {
-        sets,
-        winner,
-        note: note || (resultType !== "NORMAL" ? resultType : ""),
-      });
-    }
+        function updateAdminUI() {
+          const btnAdmin = $("btn-admin");
+          const btnLock = $("btn-lock");
+          const btnReset = $("btn-reset");
+          const btnExport = $("btn-export");
+          const btnSync = $("btn-sync");
 
-    function validateNormalSets(sets) {
-      const present = sets.filter(Boolean);
-      if (present.length < 2) throw new Error("Thiếu dữ liệu: tối thiểu phải có Set 1 và Set 2.");
+          const canAdmin = isAdmin();
 
-      present.forEach((s, idx) => {
-        const ok = isValidGameScore(s[0], s[1]);
-        if (!ok) throw new Error(`Set ${idx + 1} không hợp lệ (${s[0]}-${s[1]}).`);
-      });
+          if (btnAdmin) btnAdmin.textContent = canAdmin ? "Admin: Mở" : "Admin: Khoá";
+          if (btnLock) btnLock.textContent = `Chốt vòng bảng: ${state.groupLocked ? "Bật" : "Tắt"}`;
 
-      const w = bestOf3Winner(sets);
-      if (!w) throw new Error("Chưa đủ 2 set thắng để kết luận trận (Bo3).");
-    }
-
-    async function onSaveDialog() {
-      const m = findMatchById(currentMatchId);
-      if (!m) return;
-
-      try {
-        const s1 = parseSet(inS1.value);
-        const s2 = parseSet(inS2.value);
-        const s3 = parseSet(inS3.value);
-
-        const resultType = selType.value;
-        const forced = selForced.value;
-        const note = (inNote.value || "").trim();
-
-        const sets = [s1, s2, s3];
-
-        if (resultType === "NORMAL") {
-          validateNormalSets(sets);
-        } else {
-          sets.filter(Boolean).forEach((s, idx) => {
-            if (!isValidGameScore(s[0], s[1])) {
-              throw new Error(`Set ${idx + 1} không hợp lệ (${s[0]}-${s[1]}).`);
-            }
+          [btnLock, btnReset, btnExport, btnSync].forEach((b) => {
+            if (!b) return;
+            b.disabled = !canAdmin;
+            b.style.opacity = canAdmin ? "" : "0.55";
           });
+
+          updateStatusPill();
         }
 
-        applyResultToMatch(m, sets, resultType, forced, note);
+        // ---------- Modal: Input score ----------
+        const dlg = $("score-dialog");
+        const dlgTitle = $("dlg-title");
+        const dlgSub = $("dlg-sub");
+        const dlgErr = $("dlg-error");
+        const inS1 = $("s1");
+        const inS2 = $("s2");
+        const inS3 = $("s3");
+        const inNote = $("note");
+        const selType = $("result-type");
+        const selForced = $("forced-winner");
+        const btnClearDlg = $("dlg-clear");
+        const btnSaveDlg = $("dlg-save");
 
-        ensurePlayoffs();
-        saveState();
-        renderAll();
+        let currentMatchId = null;
 
-        // Push lên Sheet
-        const updatedMatch = findMatchById(m.id);
-        await apiUpsertMatch(updatedMatch);
-
-        if (dlg) dlg.close();
-      } catch (e) {
-        showDlgError(e?.message || "Lỗi dữ liệu. Vui lòng kiểm tra lại.");
-      }
-    }
-
-    // ---------- Export / Import ----------
-    function exportJson() {
-      const data = JSON.stringify(state, null, 2);
-      const blob = new Blob([data], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "kuro_open_winter_2026.json";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    }
-
-    function importJsonFile(file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const obj = JSON.parse(String(reader.result || ""));
-          if (!obj || !Array.isArray(obj.matches)) throw new Error("File JSON không đúng cấu trúc.");
-          state = obj;
-          saveState();
-          renderAll();
-        } catch (e) {
-          alert(e?.message || "Không import được JSON.");
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    // ---------- Lock group ----------
-    function toggleGroupLock() {
-      if (!isAdmin()) return;
-
-      state.groupLocked = !state.groupLocked;
-      if (state.groupLocked) {
-        const standings = computeStandings();
-        state.seedTop4 = standings.slice(0, 4).map((r) => r.player);
-      } else {
-        state.seedTop4 = null;
-      }
-      saveState();
-      renderAll();
-    }
-
-    // =========================
-    // CHAMPION CELEBRATION
-    // (Yêu cầu bạn đã thêm HTML/CSS overlay + canvas)
-    // =========================
-    const CHAMPION_SEEN_KEY = "kuro_champion_seen_v1";
-    let confettiRAF = null;
-    let confettiParticles = [];
-
-    function getChampionName() {
-      const f = state.playoff?.final?.[0];
-      if (!f || !f.winner) return null;
-      return f.winner === "A" ? f.a : f.b;
-    }
-
-    function maybeCelebrateChampion() {
-      const champ = getChampionName();
-      if (!champ) {
-        localStorage.removeItem(CHAMPION_SEEN_KEY);
-        return;
-      }
-      const seen = localStorage.getItem(CHAMPION_SEEN_KEY);
-      if (seen === champ) return;
-
-      localStorage.setItem(CHAMPION_SEEN_KEY, champ);
-      showChampionOverlay(champ);
-    }
-
-    function resizeConfettiCanvas(canvas) {
-      const dpr = Math.max(1, window.devicePixelRatio || 1);
-      canvas.width = Math.floor(canvas.clientWidth * dpr);
-      canvas.height = Math.floor(canvas.clientHeight * dpr);
-      const ctx = canvas.getContext("2d");
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      return ctx;
-    }
-
-    function startConfetti() {
-      const canvas = document.getElementById("confetti-canvas");
-      if (!canvas) return;
-
-      const ctx = resizeConfettiCanvas(canvas);
-      const W = canvas.clientWidth;
-      const H = canvas.clientHeight;
-
-      confettiParticles = Array.from({ length: 140 }).map(() => ({
-        x: Math.random() * W,
-        y: -20 - Math.random() * H * 0.3,
-        r: 3 + Math.random() * 4,
-        vx: -1.2 + Math.random() * 2.4,
-        vy: 2.5 + Math.random() * 4.5,
-        rot: Math.random() * Math.PI,
-        vr: -0.15 + Math.random() * 0.3,
-        a: 0.75 + Math.random() * 0.25,
-      }));
-
-      const onResize = () => resizeConfettiCanvas(canvas);
-      window.addEventListener("resize", onResize, { passive: true });
-      startConfetti._cleanup = () => window.removeEventListener("resize", onResize);
-
-      const tick = () => {
-        const w = canvas.clientWidth;
-        const h = canvas.clientHeight;
-
-        ctx.clearRect(0, 0, w, h);
-
-        for (const p of confettiParticles) {
-          p.x += p.vx;
-          p.y += p.vy;
-          p.rot += p.vr;
-
-          if (p.y > h + 40) {
-            p.y = -20;
-            p.x = Math.random() * w;
-          }
-
-          ctx.save();
-          ctx.globalAlpha = p.a;
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.rot);
-          ctx.fillRect(-p.r, -p.r, p.r * 2.2, p.r * 1.2);
-          ctx.restore();
+        function showDlgError(msg) {
+          if (!dlgErr) return;
+          dlgErr.style.display = msg ? "block" : "none";
+          dlgErr.textContent = msg || "";
         }
 
-        confettiRAF = requestAnimationFrame(tick);
-      };
-
-      confettiRAF = requestAnimationFrame(tick);
-    }
-
-    function stopConfetti() {
-      if (confettiRAF) cancelAnimationFrame(confettiRAF);
-      confettiRAF = null;
-      confettiParticles = [];
-
-      const canvas = document.getElementById("confetti-canvas");
-      if (canvas) {
-        const ctx = canvas.getContext("2d");
-        ctx && ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-      }
-
-      if (startConfetti._cleanup) startConfetti._cleanup();
-      startConfetti._cleanup = null;
-    }
-
-    function showChampionOverlay(name) {
-      const overlay = document.getElementById("champion-overlay");
-      const nameEl = document.getElementById("champion-name");
-      const btnClose = document.getElementById("btn-champion-close");
-      if (!overlay || !nameEl || !btnClose) return;
-
-      nameEl.textContent = name;
-      overlay.classList.add("show");
-      overlay.setAttribute("aria-hidden", "false");
-
-      startConfetti();
-
-      btnClose.onclick = () => {
-        overlay.classList.remove("show");
-        overlay.setAttribute("aria-hidden", "true");
-        stopConfetti();
-      };
-
-      overlay.addEventListener(
-        "click",
-        (e) => {
-          if (e.target === overlay) btnClose.click();
-        },
-        { once: true }
-      );
-    }
-
-    // ---------- MAIN RENDER ----------
-    function renderAll() {
-      renderScoreboard();
-      renderStandings();
-      renderBracket();
-      renderTop1Honor();  
-      updateAdminUI();
-      maybeCelebrateChampion();
-      
-    }
-
-    // ---------- Bind events ----------
-    function bindEvents() {
-      document.addEventListener("click", async (ev) => {
-        const t = ev.target;
-        if (!(t instanceof HTMLElement)) return;
-
-        const editId = t.getAttribute("data-edit");
-        const clearId = t.getAttribute("data-clear");
-
-        if (editId) openScoreDialog(editId);
-
-        if (clearId) {
-          const m = findMatchById(clearId);
+        function openScoreDialog(matchId) {
+          const m = findMatchById(matchId);
           if (!m) return;
+
           if (!isAdmin()) return;
           if (state.groupLocked && m.stage === "GROUP") return;
+          if (m.a === "TBD" || m.b === "TBD") return;
 
-          const ok = confirm(`Xoá tỉ số trận ${m.id} (${m.a} vs ${m.b})?`);
-          if (ok) {
-            try {
-              await clearMatch(clearId);
-            } catch (e) {
-              alert(e?.message || "Xoá trên Google Sheet thất bại.");
-            }
-          }
-        }
-      });
+          currentMatchId = matchId;
 
-      if (btnClearDlg) {
-        btnClearDlg.addEventListener("click", () => {
-          inS1.value = "";
-          inS2.value = "";
-          inS3.value = "";
-          inNote.value = "";
+          if (dlgTitle) dlgTitle.textContent = `Nhập tỉ số • ${m.id}`;
+          if (dlgSub) dlgSub.textContent = `${stageLabel(m.stage)} • ${m.a} vs ${m.b}`;
+
+          inS1.value = m.sets?.[0] ? `${m.sets[0][0]}-${m.sets[0][1]}` : "";
+          inS2.value = m.sets?.[1] ? `${m.sets[1][0]}-${m.sets[1][1]}` : "";
+          inS3.value = m.sets?.[2] ? `${m.sets[2][0]}-${m.sets[2][1]}` : "";
+
+          inNote.value = m.note || "";
           selType.value = "NORMAL";
           selForced.value = "A";
           showDlgError("");
-        });
-      }
 
-      if (btnSaveDlg) {
-        btnSaveDlg.addEventListener("click", async (e) => {
-          e.preventDefault();
-          await onSaveDialog();
-        });
-      }
+          if (dlg && typeof dlg.showModal === "function") dlg.showModal();
+        }
 
-      const btnAdmin = $("btn-admin");
-      if (btnAdmin) {
-        btnAdmin.addEventListener("click", () => {
-          if (isAdmin()) {
-            setAdmin(false);
-            return;
-          }
-          const pin = prompt("Nhập Admin PIN:");
-          if ((pin ?? "").trim() === ADMIN_PIN) setAdmin(true);
-          else alert("Sai PIN.");
-        });
-      }
-
-      const btnLock = $("btn-lock");
-      if (btnLock) btnLock.addEventListener("click", toggleGroupLock);
-
-      const btnReset = $("btn-reset");
-      if (btnReset) {
-        btnReset.addEventListener("click", () => {
+        async function clearMatch(matchId) {
+          const m = findMatchById(matchId);
+          if (!m) return;
           if (!isAdmin()) return;
-          const ok = confirm("Reset toàn bộ dữ liệu giải? (Không thể hoàn tác)");
-          if (!ok) return;
-          state = buildInitialMatches();
+          if (state.groupLocked && m.stage === "GROUP") return;
+          if (m.a === "TBD" || m.b === "TBD") return;
+
+          updateMatchById(matchId, { sets: [null, null, null], winner: null, note: "" });
+          ensurePlayoffs();
           saveState();
           renderAll();
-        });
-      }
 
-      const btnExport = $("btn-export");
-      if (btnExport) {
-        btnExport.addEventListener("click", () => {
+          // Push lên Sheet
+          const updatedMatch = findMatchById(matchId);
+          await apiUpsertMatch(updatedMatch);
+        }
+
+        function applyResultToMatch(m, sets, resultType, forcedWinner, note) {
+          let winner = null;
+
+          if (resultType === "NORMAL") {
+            winner = bestOf3Winner(sets);
+            if (!winner) throw new Error("Chưa xác định được người thắng. Hãy nhập đủ set hợp lệ (Bo3).");
+          } else {
+            winner = forcedWinner === "B" ? "B" : "A";
+            const hasAnySet = sets.some((s) => s && s[0] !== undefined);
+            if (!hasAnySet) {
+              sets = winner === "A" ? [[21, 0], [21, 0], null] : [[0, 21], [0, 21], null];
+            }
+          }
+
+          updateMatchById(m.id, {
+            sets,
+            winner,
+            note: note || (resultType !== "NORMAL" ? resultType : ""),
+          });
+        }
+
+        function validateNormalSets(sets) {
+          const present = sets.filter(Boolean);
+          if (present.length < 2) throw new Error("Thiếu dữ liệu: tối thiểu phải có Set 1 và Set 2.");
+
+          present.forEach((s, idx) => {
+            const ok = isValidGameScore(s[0], s[1]);
+            if (!ok) throw new Error(`Set ${idx + 1} không hợp lệ (${s[0]}-${s[1]}).`);
+          });
+
+          const w = bestOf3Winner(sets);
+          if (!w) throw new Error("Chưa đủ 2 set thắng để kết luận trận (Bo3).");
+        }
+
+        async function onSaveDialog() {
+          const m = findMatchById(currentMatchId);
+          if (!m) return;
+
+          try {
+            const s1 = parseSet(inS1.value);
+            const s2 = parseSet(inS2.value);
+            const s3 = parseSet(inS3.value);
+
+            const resultType = selType.value;
+            const forced = selForced.value;
+            const note = (inNote.value || "").trim();
+
+            const sets = [s1, s2, s3];
+
+            if (resultType === "NORMAL") {
+              validateNormalSets(sets);
+            } else {
+              sets.filter(Boolean).forEach((s, idx) => {
+                if (!isValidGameScore(s[0], s[1])) {
+                  throw new Error(`Set ${idx + 1} không hợp lệ (${s[0]}-${s[1]}).`);
+                }
+              });
+            }
+
+            applyResultToMatch(m, sets, resultType, forced, note);
+
+            ensurePlayoffs();
+            saveState();
+            renderAll();
+
+            // Push lên Sheet
+            const updatedMatch = findMatchById(m.id);
+            await apiUpsertMatch(updatedMatch);
+
+            if (dlg) dlg.close();
+          } catch (e) {
+            showDlgError(e?.message || "Lỗi dữ liệu. Vui lòng kiểm tra lại.");
+          }
+        }
+
+        // ---------- Export / Import ----------
+        function exportJson() {
+          const data = JSON.stringify(state, null, 2);
+          const blob = new Blob([data], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "kuro_open_winter_2026.json";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+        }
+
+        function importJsonFile(file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            try {
+              const obj = JSON.parse(String(reader.result || ""));
+              if (!obj || !Array.isArray(obj.matches)) throw new Error("File JSON không đúng cấu trúc.");
+              state = obj;
+              saveState();
+              renderAll();
+            } catch (e) {
+              alert(e?.message || "Không import được JSON.");
+            }
+          };
+          reader.readAsText(file);
+        }
+
+        // ---------- Lock group ----------
+        function toggleGroupLock() {
           if (!isAdmin()) return;
-          exportJson();
-        });
-      }
 
-      const fileImport = $("file-import");
-      if (fileImport) {
-        fileImport.addEventListener("change", () => {
-          const f = fileImport.files?.[0];
-          if (!f) return;
-          if (!isAdmin()) {
-            alert("Cần Admin để import.");
-            fileImport.value = "";
+          state.groupLocked = !state.groupLocked;
+          if (state.groupLocked) {
+            const standings = computeStandings();
+            state.seedTop4 = standings.slice(0, 4).map((r) => r.player);
+          } else {
+            state.seedTop4 = null;
+          }
+          saveState();
+          renderAll();
+        }
+
+        // =========================
+        // CHAMPION CELEBRATION
+        // (Yêu cầu bạn đã thêm HTML/CSS overlay + canvas)
+        // =========================
+        const CHAMPION_SEEN_KEY = "kuro_champion_seen_v1";
+        let confettiRAF = null;
+        let confettiParticles = [];
+
+        function getChampionName() {
+          const f = state.playoff?.final?.[0];
+          if (!f || !f.winner) return null;
+          return f.winner === "A" ? f.a : f.b;
+        }
+
+        function maybeCelebrateChampion() {
+          const champ = getChampionName();
+          if (!champ) {
+            localStorage.removeItem(CHAMPION_SEEN_KEY);
             return;
           }
-          importJsonFile(f);
-          fileImport.value = "";
-        });
+          const seen = localStorage.getItem(CHAMPION_SEEN_KEY);
+          if (seen === champ) return;
+
+          localStorage.setItem(CHAMPION_SEEN_KEY, champ);
+          showChampionOverlay(champ);
+        }
+
+        function resizeConfettiCanvas(canvas) {
+          const dpr = Math.max(1, window.devicePixelRatio || 1);
+          canvas.width = Math.floor(canvas.clientWidth * dpr);
+          canvas.height = Math.floor(canvas.clientHeight * dpr);
+          const ctx = canvas.getContext("2d");
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          return ctx;
+        }
+
+        function startConfetti() {
+          const canvas = document.getElementById("confetti-canvas");
+          if (!canvas) return;
+
+          const ctx = resizeConfettiCanvas(canvas);
+          const W = canvas.clientWidth;
+          const H = canvas.clientHeight;
+
+          confettiParticles = Array.from({ length: 140 }).map(() => ({
+            x: Math.random() * W,
+            y: -20 - Math.random() * H * 0.3,
+            r: 3 + Math.random() * 4,
+            vx: -1.2 + Math.random() * 2.4,
+            vy: 2.5 + Math.random() * 4.5,
+            rot: Math.random() * Math.PI,
+            vr: -0.15 + Math.random() * 0.3,
+            a: 0.75 + Math.random() * 0.25,
+          }));
+
+          const onResize = () => resizeConfettiCanvas(canvas);
+          window.addEventListener("resize", onResize, { passive: true });
+          startConfetti._cleanup = () => window.removeEventListener("resize", onResize);
+
+          const tick = () => {
+            const w = canvas.clientWidth;
+            const h = canvas.clientHeight;
+
+            ctx.clearRect(0, 0, w, h);
+
+            for (const p of confettiParticles) {
+              p.x += p.vx;
+              p.y += p.vy;
+              p.rot += p.vr;
+
+              if (p.y > h + 40) {
+                p.y = -20;
+                p.x = Math.random() * w;
+              }
+
+              ctx.save();
+              ctx.globalAlpha = p.a;
+              ctx.translate(p.x, p.y);
+              ctx.rotate(p.rot);
+              ctx.fillRect(-p.r, -p.r, p.r * 2.2, p.r * 1.2);
+              ctx.restore();
+            }
+
+            confettiRAF = requestAnimationFrame(tick);
+          };
+
+          confettiRAF = requestAnimationFrame(tick);
+        }
+
+        function stopConfetti() {
+          if (confettiRAF) cancelAnimationFrame(confettiRAF);
+          confettiRAF = null;
+          confettiParticles = [];
+
+          const canvas = document.getElementById("confetti-canvas");
+          if (canvas) {
+            const ctx = canvas.getContext("2d");
+            ctx && ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+          }
+
+          if (startConfetti._cleanup) startConfetti._cleanup();
+          startConfetti._cleanup = null;
+        }
+
+        function showChampionOverlay(name) {
+          const overlay = document.getElementById("champion-overlay");
+          const nameEl = document.getElementById("champion-name");
+          const btnClose = document.getElementById("btn-champion-close");
+          if (!overlay || !nameEl || !btnClose) return;
+
+          nameEl.textContent = name;
+          overlay.classList.add("show");
+          overlay.setAttribute("aria-hidden", "false");
+
+          startConfetti();
+
+          btnClose.onclick = () => {
+            overlay.classList.remove("show");
+            overlay.setAttribute("aria-hidden", "true");
+            stopConfetti();
+          };
+
+          overlay.addEventListener(
+            "click",
+            (e) => {
+              if (e.target === overlay) btnClose.click();
+            },
+            { once: true }
+          );
+        }
+
+        // ---------- MAIN RENDER ----------
+        function renderAll() {
+          renderScoreboard();
+          renderStandings();
+          renderBracket();
+          renderTop1Honor();
+          updateAdminUI();
+          maybeCelebrateChampion();
+
+        }
+
+        // ---------- Bind events ----------
+        function bindEvents() {
+          document.addEventListener("click", async (ev) => {
+            const t = ev.target;
+            if (!(t instanceof HTMLElement)) return;
+
+            const editId = t.getAttribute("data-edit");
+            const clearId = t.getAttribute("data-clear");
+
+            if (editId) openScoreDialog(editId);
+
+            if (clearId) {
+              const m = findMatchById(clearId);
+              if (!m) return;
+              if (!isAdmin()) return;
+              if (state.groupLocked && m.stage === "GROUP") return;
+
+              const ok = confirm(`Xoá tỉ số trận ${m.id} (${m.a} vs ${m.b})?`);
+              if (ok) {
+                try {
+                  await clearMatch(clearId);
+                } catch (e) {
+                  alert(e?.message || "Xoá trên Google Sheet thất bại.");
+                }
+              }
+            }
+          });
+
+          if (btnClearDlg) {
+            btnClearDlg.addEventListener("click", () => {
+              inS1.value = "";
+              inS2.value = "";
+              inS3.value = "";
+              inNote.value = "";
+              selType.value = "NORMAL";
+              selForced.value = "A";
+              showDlgError("");
+            });
+          }
+
+          if (btnSaveDlg) {
+            btnSaveDlg.addEventListener("click", async (e) => {
+              e.preventDefault();
+              await onSaveDialog();
+            });
+          }
+
+          const btnAdmin = $("btn-admin");
+          if (btnAdmin) {
+            btnAdmin.addEventListener("click", () => {
+              if (isAdmin()) {
+                setAdmin(false);
+                return;
+              }
+              const pin = prompt("Nhập Admin PIN:");
+              if ((pin ?? "").trim() === ADMIN_PIN) setAdmin(true);
+              else alert("Sai PIN.");
+            });
+          }
+
+          const btnLock = $("btn-lock");
+          if (btnLock) btnLock.addEventListener("click", toggleGroupLock);
+
+          const btnReset = $("btn-reset");
+          if (btnReset) {
+            btnReset.addEventListener("click", () => {
+              if (!isAdmin()) return;
+              const ok = confirm("Reset toàn bộ dữ liệu giải? (Không thể hoàn tác)");
+              if (!ok) return;
+              state = buildInitialMatches();
+              saveState();
+              renderAll();
+            });
+          }
+
+          const btnExport = $("btn-export");
+          if (btnExport) {
+            btnExport.addEventListener("click", () => {
+              if (!isAdmin()) return;
+              exportJson();
+            });
+          }
+
+          const fileImport = $("file-import");
+          if (fileImport) {
+            fileImport.addEventListener("change", () => {
+              const f = fileImport.files?.[0];
+              if (!f) return;
+              if (!isAdmin()) {
+                alert("Cần Admin để import.");
+                fileImport.value = "";
+                return;
+              }
+              importJsonFile(f);
+              fileImport.value = "";
+            });
+          }
+
+          const btnSync = $("btn-sync");
+          if (btnSync) {
+            btnSync.addEventListener("click", async () => {
+              if (!isAdmin()) return;
+              await syncFromSheetApi({ silent: false });
+            });
+          }
+        }
+
+        // ---------- INIT ----------
+        setupFilter();
+        bindEvents();
+        updateAdminUI();
+        renderAll();
+
+        // Sync lần đầu
+        syncFromSheetApi({ silent: true });
+
+        // Auto-sync: nhanh cho admin, chậm cho viewer + skip khi tab hidden
+        const FAST_MS = 5000;
+        const SLOW_MS = 15000;
+
+        setInterval(() => {
+          if (document.hidden) return;
+
+          const now = Date.now();
+          const last = state.lastSyncAt || 0;
+          const interval = isAdmin() ? FAST_MS : SLOW_MS;
+
+          if (now - last < interval) return;
+
+          syncFromSheetApi({ silent: true });
+        }, 5000);
       }
 
-      const btnSync = $("btn-sync");
-      if (btnSync) {
-        btnSync.addEventListener("click", async () => {
-          if (!isAdmin()) return;
-          await syncFromSheetApi({ silent: false });
-        });
-      }
-    }
-
-    // ---------- INIT ----------
-    setupFilter();
-    bindEvents();
-    updateAdminUI();
-    renderAll();
-
-    // Sync lần đầu
-    syncFromSheetApi({ silent: true });
-
-    // Auto-sync: nhanh cho admin, chậm cho viewer + skip khi tab hidden
-    const FAST_MS = 5000;
-    const SLOW_MS = 15000;
-
-    setInterval(() => {
-      if (document.hidden) return;
-
-      const now = Date.now();
-      const last = state.lastSyncAt || 0;
-      const interval = isAdmin() ? FAST_MS : SLOW_MS;
-
-      if (now - last < interval) return;
-
-      syncFromSheetApi({ silent: true });
-    }, 5000);
-  }
-
-  // ---------- Boot ----------
-  onReady(() => {
-    initCountdown();
-    initSmoothScroll();
-    initFadeIn();
-    initDemoCounters();
-    initApp();
-  });
-})();
-</script>
+      // ---------- Boot ----------
+      onReady(() => {
+        initCountdown();
+        initSmoothScroll();
+        initFadeIn();
+        initDemoCounters();
+        initApp();
+      });
+    })();
+  </script>
 
 
 </body>
