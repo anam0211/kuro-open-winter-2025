@@ -1095,6 +1095,23 @@
     height: 86px;
   }
 }
+/* ==== Mobile: lighten Live Scoreboard ==== */
+@media (max-width: 768px) {
+  /* Giảm nặng cho các "card row" */
+  .schedule-table tr {
+    box-shadow: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  .schedule-table tr:hover {
+    transform: none !important;
+  }
+
+  /* Nếu vẫn lag: tắt blur riêng vùng scoreboard */
+  #live-scoreboard {
+    backdrop-filter: none !important;
+  }
+}
 
 
   </style>
@@ -1754,13 +1771,26 @@
         const STORAGE_KEY = "kuro_open_winter_2026_v4_api";
         const ADMIN_PIN = "2005";
         const ADMIN_KEY = "kuro_admin_unlocked";
-
+        
         // URL Web App Apps Script (/exec)
         const SHEET_API_URL =
           "https://script.google.com/macros/s/AKfycbwS-1CJFE4gPuxKDSK7yxYYOPQ_l1qDeXaFSaeI1JV0CbYkffHRBYXv3urSTkUu5CjA/exec";
 
         const players = ["AnKuro", "ĐứcKuro", "KiênKuro", "HoánKuro", "QuangKuro"];
         const $ = (id) => document.getElementById(id);
+        // --- Detect user is scrolling: tránh sync/render trong lúc kéo ---
+let isScrolling = false;
+let scrollTimer = null;
+
+window.addEventListener(
+  "scroll",
+  () => {
+    isScrolling = true;
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => (isScrolling = false), 180);
+  },
+  { passive: true }
+);
 
         // ---------- Admin ----------
         function isAdmin() {
@@ -1772,6 +1802,29 @@
         }
 
         // ---------- Helpers ----------
+        function eqSets(a, b) {
+  // a,b: [ [x,y] | null, ... ]
+  for (let i = 0; i < 3; i++) {
+    const sa = a?.[i] || null;
+    const sb = b?.[i] || null;
+    if (sa === null && sb === null) continue;
+    if (!sa || !sb) return false;
+    if (sa[0] !== sb[0] || sa[1] !== sb[1]) return false;
+  }
+  return true;
+}
+
+function eqMatch(m, stage, a, b, sets, winner, note) {
+  return (
+    m.stage === stage &&
+    m.a === a &&
+    m.b === b &&
+    eqSets(m.sets, sets) &&
+    (m.winner || null) === (winner || null) &&
+    (m.note || "") === (note || "")
+  );
+}
+
         function parseSet(str) {
           if (!str || !String(str).trim()) return null;
           const m = String(str).trim().match(/^(\d{1,2})\s*-\s*(\d{1,2})$/);
@@ -2178,40 +2231,49 @@
             let updated = 0;
 
             for (const r of rows) {
-              const id = String(r.id || "").trim();
-              if (!id || !map.has(id)) continue;
+  const id = String(r.id || "").trim();
+  if (!id || !map.has(id)) continue;
 
-              const m = map.get(id);
+  const m = map.get(id);
 
-              const stage = String(r.stage || m.stage);
-              const a = String(r.a || m.a);
-              const b = String(r.b || m.b);
+  const stage = String(r.stage || m.stage);
+  const a = String(r.a || m.a);
+  const b = String(r.b || m.b);
 
-              const s1 = parseSet(r.set1);
-              const s2 = parseSet(r.set2);
-              const s3 = parseSet(r.set3);
-              const sets = [s1, s2, s3];
+  const s1 = parseSet(r.set1);
+  const s2 = parseSet(r.set2);
+  const s3 = parseSet(r.set3);
+  const sets = [s1, s2, s3];
 
-              // winner: ưu tiên cột winner (tên/A/B), nếu trống thì suy ra từ set
-              let winner = null;
-              const wRaw = String(r.winner || "").trim();
-              if (wRaw) {
-                if (wRaw === "A" || wRaw === "B") winner = wRaw;
-                else if (wRaw === a) winner = "A";
-                else if (wRaw === b) winner = "B";
-              }
-              if (!winner) winner = deriveWinnerFromSets(sets);
+  let winner = null;
+  const wRaw = String(r.winner || "").trim();
+  if (wRaw) {
+    if (wRaw === "A" || wRaw === "B") winner = wRaw;
+    else if (wRaw === a) winner = "A";
+    else if (wRaw === b) winner = "B";
+  }
+  if (!winner) winner = deriveWinnerFromSets(sets);
 
-              const note = String(r.note || "");
+  const note = String(r.note || "");
 
-              updateMatchById(id, { stage, a, b, sets, winner, note });
-              updated++;
-            }
+  // --- CHỈ UPDATE KHI KHÁC ---
+  if (eqMatch(m, stage, a, b, sets, winner, note)) continue;
 
+  updateMatchById(id, { stage, a, b, sets, winner, note });
+  updated++;
+}
             state.lastSyncAt = Date.now();
-            ensurePlayoffs();
-            saveState();
-            renderAll();
+ensurePlayoffs();
+saveState();
+
+// Nếu không có gì thay đổi thì KHÔNG rebuild bảng
+if (updated > 0) {
+  renderAll();
+} else {
+  // chỉ cập nhật pill thời gian sync (nhẹ)
+  updateStatusPill();
+}
+
 
             if (!silent) alert(`Sync OK: cập nhật ${updated} dòng.`);
             return updated;
@@ -2938,16 +3000,18 @@
         const SLOW_MS = 15000;
 
         setInterval(() => {
-          if (document.hidden) return;
+  if (document.hidden) return;
+  if (isScrolling) return; // <-- thêm dòng này
 
-          const now = Date.now();
-          const last = state.lastSyncAt || 0;
-          const interval = isAdmin() ? FAST_MS : SLOW_MS;
+  const now = Date.now();
+  const last = state.lastSyncAt || 0;
+  const interval = isAdmin() ? FAST_MS : SLOW_MS;
 
-          if (now - last < interval) return;
+  if (now - last < interval) return;
 
-          syncFromSheetApi({ silent: true });
-        }, 5000);
+  syncFromSheetApi({ silent: true });
+}, 5000);
+
       }
 
       // ---------- Boot ----------
